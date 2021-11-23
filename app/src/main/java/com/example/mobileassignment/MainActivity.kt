@@ -8,9 +8,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        // hello guys
-        // Wai is toxic
+        // Choon shean is salty
         //Jason
     }
 }
