@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        //test from wai
-        //Jason
+        // hello guys
+        // Wai is toxic
     }
 }
