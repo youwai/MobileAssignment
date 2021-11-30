@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">MobileAssignment</string>
+    <string name="app_name">Material Warehousing</string>
+    <string name="password">Password</string>
+    <string name="employee_id">Employee ID</string>
+    <string name="login">Login</string>
+    <string name="system_name">Hotayi Electronics Warehousing System</string>
 </resources>
