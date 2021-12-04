@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:checked="true"
+            android:title="@string/dashboard"
+            android:icon="@drawable/home"/>
+        <item
+            android:id="@+id/nav_listing"
+            android:checked="false"
+            android:title="@string/material_listing"
+            android:icon="@drawable/material_list"/>
+        <item
+            android:id="@+id/nav_add"
+            android:checked="false"
+            android:title="@string/add_new_material"
+            android:icon="@drawable/add_material"/>
+        <item
+            android:id="@+id/nav_scanqr"
+            android:checked="false"
+            android:title="@string/scan_qr_code"
+            android:icon="@drawable/qr_code_scanner"/>
+
+        <item
+            android:id="@+id/logout"
+            android:checked="false"
+            android:title="@string/logout"
+            android:icon="@drawable/logout"
+            />
+
+    </group>
+
+</menu>

@@ -1,7 +1,17 @@
 <resources>
-    <string name="app_name">Material Warehousing</string>
+    <string name="app_name"> </string>
     <string name="password">Password</string>
     <string name="employee_id">Employee ID</string>
     <string name="login">Login</string>
     <string name="system_name">Hotayi Electronics Warehousing System</string>
+    
+    <!--  Navigation menu  -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="material_listing">Material listing</string>
+    <string name="add_new_material">Add new material</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="logout">Logout</string>
+
 </resources>

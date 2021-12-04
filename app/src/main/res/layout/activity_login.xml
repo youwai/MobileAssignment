@@ -37,7 +37,7 @@
             android:hint="@string/employee_id"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_baseline_person_20">
+            app:startIconDrawable="@drawable/person">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/idInput"
@@ -58,7 +58,7 @@
             android:hint="@string/password"
             app:endIconMode="password_toggle"
             app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_baseline_lock_20">
+            app:startIconDrawable="@drawable/lock">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passInput"
