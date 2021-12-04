@@ -76,13 +76,14 @@ class Login : AppCompatActivity() {
         else {
             intent.putExtra("user", selectedEmp)
             startActivity(intent)
+            finish()
         }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        selectedEmp = null
-    }
+//    override fun onRestart() {
+//        super.onRestart()
+//        selectedEmp = null
+//    }
 
     private interface FirestoreCallback {
         fun onCallback(item: Employee?)
