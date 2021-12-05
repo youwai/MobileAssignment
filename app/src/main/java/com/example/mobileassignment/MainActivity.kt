@@ -1,5 +1,6 @@
 package com.example.mobileassignment
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,19 +10,36 @@ import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.mobileassignment.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.zxing.integration.android.IntentIntegrator
+import org.json.JSONException
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var scannerIntegrator: IntentIntegrator
+    private lateinit var qrLauncher : ActivityResultLauncher<Intent>
+    private lateinit var permissionLauncher : ActivityResultLauncher<String>
+    private lateinit var viewModelData: ViewModelData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        //Create ViewModel (Owner : this activity)
+        viewModelData = ViewModelProvider(this).get(ViewModelData::class.java)
 
         val loginEmp = intent.getSerializableExtra("user") as Employee?
 
@@ -52,6 +70,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         name.text = loginEmp?.name
         empID.text = loginEmp?.id
+
+        //Set Qr Code Scanner
+        setupRequiredSetting()
+
     }
 
     override fun onBackPressed() {
@@ -66,16 +88,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.nav_dashboard -> {
-                TODO("navigate to dashboard")
+
+                //Navigate To Dashboard
+                //navigationFunction(fragment object)
+
             }
             R.id.nav_listing -> {
-                TODO("navigate to listing")
+
+                //Navigate to List
+                //navigationFunction(fragment object)
             }
             R.id.nav_add -> {
-                TODO("navigate to add material")
+
+                //Navigate to Add Materials
+                //navigationFunction(fragment object)
             }
             R.id.nav_scanqr -> {
-                TODO("navigate to scan qr")
+                permissionLauncher.launch(android.Manifest.permission.CAMERA)
             }
             R.id.logout -> {
                 val intent = Intent(this, Login::class.java)
@@ -86,4 +115,94 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         return true
     }
+
+    private fun setupRequiredSetting(){
+
+        //Set up QR Code Scanner
+        setupMyQrScanner()
+
+        //Set up permission
+        setupPermissionLauncher()
+
+        //Set up Qr Launcher
+        setupQrLauncher()
+
+    }
+
+    private fun setupMyQrScanner(){
+
+        //IntentIntegrator(this) for activity
+
+        val promptText = "Please Scan the OR Code"
+
+        scannerIntegrator = IntentIntegrator(this)
+        scannerIntegrator.setOrientationLocked(true)
+        scannerIntegrator.setPrompt(promptText)
+
+        //0 for back camera
+        //1 for front camera
+        scannerIntegrator.setCameraId(0)
+        scannerIntegrator.setBeepEnabled(true)
+
+
+    }
+
+    private fun setupQrLauncher(){
+
+        qrLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+            if(it.resultCode == Activity.RESULT_OK) {
+                val result = IntentIntegrator.parseActivityResult(it.resultCode, it.data)
+                if (result != null) {
+                    if (result.contents == null) {
+                        Toast.makeText(this, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG).show()
+                    } else {
+                        try {
+                            viewModelData.setValue(JSONObject(result.contents))
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                            Toast.makeText(this, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG).show()
+                }
+            }
+            //Navigate to Temp Fragment to Show the data
+            navigationFunction(TempFragment())
+        }
+
+
+    }
+
+    private fun setupPermissionLauncher(){
+
+        //Get Permission
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+
+            if(it){
+                qrLauncher.launch(scannerIntegrator.createScanIntent())
+                Toast.makeText(this, "Camera Access Granted !!", Toast.LENGTH_LONG).show()
+
+            }else{
+                Toast.makeText(this, "Please Accept Camera Permission !", Toast.LENGTH_LONG).show()
+            }
+
+        }
+
+    }
+
+    //This Function is call to navigate to other fragment
+    private fun navigationFunction(fragment : Fragment){
+
+        val navigate = supportFragmentManager.beginTransaction()
+
+        navigate.replace(R.id.fragmentContainer,fragment)
+        navigate.commit()
+
+
+    }
+
+
+
 }
