@@ -93,19 +93,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //Navigate To Dashboard
                 //navigationFunction(fragment object)
 
+                // Do not delete. This is to close the navigation slider
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             R.id.nav_listing -> {
 
                 //Navigate to List
                 //navigationFunction(fragment object)
+
+                // Do not delete. This is to close the navigation slider
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             R.id.nav_add -> {
 
                 //Navigate to Add Materials
                 //navigationFunction(fragment object)
+
+                // Do not delete. This is to close the navigation slider
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             R.id.nav_scanqr -> {
                 permissionLauncher.launch(android.Manifest.permission.CAMERA)
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             R.id.logout -> {
                 val intent = Intent(this, Login::class.java)
