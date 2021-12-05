@@ -90,8 +90,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when(item.itemId) {
             R.id.nav_dashboard -> {
 
-                //Navigate To Dashboard
-                //navigationFunction(fragment object)
+//                Navigate To Dashboard
+                navigationFunction(Dashboard())
 
                 // Do not delete. This is to close the navigation slider
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
