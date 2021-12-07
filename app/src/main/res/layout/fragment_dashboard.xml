@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -10,7 +9,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".MainActivity">
 
             <LinearLayout
@@ -18,81 +17,171 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
                 android:paddingBottom="20dp">
 
-                <TextView
-                    android:id="@+id/today"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Today"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/calendar" />
+
+                    <TextView
+                        android:id="@+id/today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Today"
+                        android:textSize="30sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="2dp"
+                    android:background="#efefefef" />
 
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Date "
+                    android:text="Date"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Summary"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:src="@drawable/summary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Summary"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <View
-                    android:id="@+id/line1"
-                    android:layout_width="140dp"
+                    android:layout_width="170dp"
                     android:layout_height="2dp"
-                    android:layout_below="@+id/summary"
                     android:layout_marginTop="4dp"
                     android:background="@color/light_gray" />
 
-                <TextView
-                    android:id="@+id/totalRack"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Total Rack :"
-                    android:textSize="15sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/lowQuotaRack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Low Quota Rack :"
-                    android:textSize="15sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp">
 
+                        <TextView
+                            android:id="@+id/lowQuotaRack_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Low Quota Racks : "
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/lowQuotaRack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_toEndOf="@id/lowQuotaRack_title"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="5"
+                            android:textSize="25sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/totalRack_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Total Racks : "
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/totalRack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_toEndOf="@id/totalRack_title"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="5"
+                            android:textSize="25sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Alert"
-                android:textSize="30sp"
-                android:textStyle="bold"
                 android:layout_below="@+id/upperLayout"
-                android:layout_centerInParent="true"
-                />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                tools:ignore="RtlSymmetry,UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:src="@drawable/notice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Notice"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
             <View
                 android:id="@+id/line2"
-                android:layout_width="match_parent"
+                android:layout_width="140dp"
                 android:layout_height="2dp"
-                android:layout_marginHorizontal="25dp"
-                android:background="#efefefef"
-                android:layout_below="@+id/label"/>
+                android:layout_below="@id/label"
+                android:layout_marginStart="20dp"
+                android:background="#efefefef" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/materialrecycleView"
@@ -102,10 +191,6 @@
 
         </RelativeLayout>
 
-
-
     </ScrollView>
-
-
 
 </layout>

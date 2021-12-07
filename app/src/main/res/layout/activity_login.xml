@@ -14,7 +14,8 @@
             android:layout_height="108dp"
             android:layout_gravity="center"
             android:layout_marginTop="80dp"
-            app:srcCompat="@drawable/hotayi_logo" />
+            app:srcCompat="@drawable/hotayi_logo"
+            android:contentDescription="@string/app_name" />
 
         <TextView
             android:layout_width="wrap_content"
