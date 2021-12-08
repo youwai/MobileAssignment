@@ -24,7 +24,7 @@ class TempFragment : Fragment() {
 
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_temp,container,false)
-        val viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
+        viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
         binding.viewmodelData = viewModelData
 

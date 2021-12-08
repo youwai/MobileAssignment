@@ -8,6 +8,8 @@ class ViewModelData: ViewModel() {
     var serialNo : String? = null
     var partNo : String? = null
     var quantity : String? = null
+    var rack : MutableList<Rack> = mutableListOf()
+
 
 
     //This is for Qr Data

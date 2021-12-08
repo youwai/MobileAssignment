@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileassignment.databinding.FragmentDashboardBinding
@@ -19,6 +20,7 @@ class Dashboard : Fragment() {
     private lateinit var binding : FragmentDashboardBinding
     private lateinit var manager : RecyclerView.LayoutManager
     private var rack : MutableList<Rack> = mutableListOf()
+    private lateinit var viewModelData: ViewModelData
     private val db = Firebase.firestore
 
     override fun onCreateView(
@@ -27,11 +29,14 @@ class Dashboard : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_dashboard,container,false)
 
+        viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
+
         manager = LinearLayoutManager(requireContext())
 
 
         readMaterial(object : FirestoreCallback {
             override fun onCallback(rack : MutableList<Rack>) {
+                viewModelData.rack = rack
                 recyclerView()
             }
         })
@@ -50,7 +55,7 @@ class Dashboard : Fragment() {
             for (document in result) {
                 rack.add(Rack(document.data["name"].toString(),document.data["quota"].toString(),document.data["description"].toString()))
             }
-            Log.w("failedAttempt", "yyyyyyyyyyyyyyyyyyyy")
+            //Log.w("failedAttempt", "yyyyyyyyyyyyyyyyyyyy")
             firebaseCallback.onCallback(rack)
         }
             .addOnFailureListener { exception ->

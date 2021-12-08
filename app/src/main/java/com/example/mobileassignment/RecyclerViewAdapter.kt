@@ -32,7 +32,6 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
             holder.status.text = "Quota Available"
             holder.icon.setImageResource(R.drawable.ic_available)
         }
-
     }
 
     override fun getItemCount(): Int {

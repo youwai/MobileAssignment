@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_listing -> {
 
                 //Navigate to List
-                //navigationFunction(fragment object)
+                navigationFunction(RackList())
 
                 // Do not delete. This is to close the navigation slider
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -161,28 +161,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         qrLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
-            if(it.resultCode == Activity.RESULT_OK) {
+            if (it.resultCode == Activity.RESULT_OK) {
                 val result = IntentIntegrator.parseActivityResult(it.resultCode, it.data)
                 if (result != null) {
                     if (result.contents == null) {
-                        Toast.makeText(this, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this,
+                            "InCorrect Format!!! Please Try Again",
+                            Toast.LENGTH_LONG
+                        ).show()
                     } else {
                         try {
                             viewModelData.setValue(JSONObject(result.contents))
                         } catch (e: JSONException) {
                             e.printStackTrace()
-                            Toast.makeText(this, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                this,
+                                "InCorrect Format!!! Please Try Again",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 } else {
-                    Toast.makeText(this, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
             //Navigate to Temp Fragment to Show the data
             navigationFunction(TempFragment())
         }
-
-
     }
 
     private fun setupPermissionLauncher(){
@@ -209,7 +216,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigate.replace(R.id.fragmentContainer,fragment)
         navigate.commit()
-
 
     }
 
