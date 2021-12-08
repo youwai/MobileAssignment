@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
@@ -40,11 +41,24 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
 
     inner class ViewHolder(view : View):RecyclerView.ViewHolder(view){
 
-        val rackName = view.findViewById<TextView>(R.id.rackName)
-        val description = view.findViewById<TextView>(R.id.description)
-        val quota = view.findViewById<TextView>(R.id.quota)
-        val status = view.findViewById<TextView>(R.id.status)
-        val icon = view.findViewById<ImageView>(R.id.StatusIcon)
+        val rackName: TextView = view.findViewById(R.id.rackName)
+        val description: TextView = view.findViewById(R.id.description)
+        val quota: TextView = view.findViewById(R.id.quota)
+        val status: TextView = view.findViewById(R.id.status)
+        val icon: ImageView = view.findViewById(R.id.StatusIcon)
+
+        init {
+            view.setOnClickListener {
+
+                //This is To Get the position of the cardView.
+                val position :Int = absoluteAdapterPosition
+
+                //Navigate to ???
+                //rackData[position] Pass This Object to the Material List
+                Toast.makeText(view.context, rackData[position].rackName, Toast.LENGTH_LONG).show()
+            }
+        }
+
 
 
     }
