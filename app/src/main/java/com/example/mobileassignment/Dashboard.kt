@@ -127,7 +127,22 @@ class Dashboard : Fragment() {
 
     private fun recyclerView(){
         binding.materialrecycleView.layoutManager = manager
-        binding.materialrecycleView.adapter = RecyclerViewAdapter(viewModelData.rack)
+        binding.materialrecycleView.adapter = RecyclerViewAdapter(filterLowQuotaRack())
+
+    }
+
+    private fun filterLowQuotaRack():MutableList<Rack>{
+
+        val lowQuotaRack :MutableList<Rack> = mutableListOf()
+
+        for(rack in viewModelData.rack){
+
+            if((rack.quota.toInt() - rack.usedQuota.toInt()) < 10) {
+                lowQuotaRack.add(rack)
+            }
+        }
+
+        return lowQuotaRack
 
     }
 
@@ -136,5 +151,7 @@ class Dashboard : Fragment() {
         someHandler?.removeCallbacksAndMessages(null)
         someHandler = null
     }
+
+
 
 }
