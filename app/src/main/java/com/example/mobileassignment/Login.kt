@@ -80,11 +80,6 @@ class Login : AppCompatActivity() {
         }
     }
 
-//    override fun onRestart() {
-//        super.onRestart()
-//        selectedEmp = null
-//    }
-
     private interface FirestoreCallback {
         fun onCallback(item: Employee?)
     }

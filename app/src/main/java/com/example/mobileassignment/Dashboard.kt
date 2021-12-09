@@ -1,6 +1,9 @@
 package com.example.mobileassignment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,15 +16,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileassignment.databinding.FragmentDashboardBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import android.os.Looper.getMainLooper
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Dashboard : Fragment() {
 
     private lateinit var binding : FragmentDashboardBinding
     private lateinit var manager : RecyclerView.LayoutManager
-    private var rackData : MutableList<Rack> = mutableListOf()
+    private var rack : MutableList<Rack> = mutableListOf()
     private lateinit var viewModelData: ViewModelData
     private val db = Firebase.firestore
+    private var someHandler: Handler? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,19 +40,22 @@ class Dashboard : Fragment() {
 
         manager = LinearLayoutManager(requireContext())
 
-
         readMaterial(object : FirestoreCallback {
             override fun onCallback(rack : MutableList<Rack>) {
                 viewModelData.rack = rack
-
-                getUsedQuota(object  :UsedQuotaDataCallBack{
-                    override fun onCallback(rack: MutableList<Rack>){
-
-                        recyclerView()
-                    }
-                })
+                recyclerView()
             }
         })
+
+        // set up date in dashbaord
+        someHandler = Handler(getMainLooper())
+        someHandler!!.postDelayed(object : Runnable {
+            @SuppressLint("SimpleDateFormat")
+            override fun run() {
+                binding.date.text = SimpleDateFormat("(EEE) dd MMM, yyyy      hh:mm:ss a").format(Date())
+                someHandler!!.postDelayed(this, 1000)
+            }
+        }, 10)
 
 
         return binding.root
@@ -55,45 +65,32 @@ class Dashboard : Fragment() {
         fun onCallback(rack: MutableList<Rack>)
     }
 
-
-    private interface UsedQuotaDataCallBack{
-        fun onCallback(rack: MutableList<Rack>)
-
-    }
-
     private fun readMaterial(firebaseCallback : FirestoreCallback){
 
         db.collection("Rack").get().addOnSuccessListener { result ->
             for (document in result) {
-                rackData.add(Rack(document.data["name"].toString(),document.data["quota"].toString(),document.data["description"].toString(),"0"))
+                rack.add(Rack(document.data["name"].toString(),document.data["quota"].toString(),document.data["description"].toString()))
             }
-            firebaseCallback.onCallback(rackData)
+            //Log.w("failedAttempt", "yyyyyyyyyyyyyyyyyyyy")
+            firebaseCallback.onCallback(rack)
         }
             .addOnFailureListener { exception ->
 
                 Log.w("failedAttempt", "Error getting documents.", exception)
         }
-    }
 
-    private fun getUsedQuota(usedQuota :UsedQuotaDataCallBack){
 
-        for(rack in rackData){
-            db.collection("Rack").document(rack.rackName).collection("Materials").get().addOnSuccessListener {
-                rack.usedQuota = it.size().toString()
-                Log.v("Used Size",it.size().toString())
-
-                usedQuota.onCallback(rackData)
-
-            }.addOnFailureListener { exception ->
-                Log.w("failedAttempt", "Error getting documents.", exception)
-            }
-        }
     }
 
     private fun recyclerView(){
         binding.materialrecycleView.layoutManager = manager
-        binding.materialrecycleView.adapter = RecyclerViewAdapter(viewModelData.rack)
+        binding.materialrecycleView.adapter = RecyclerViewAdapter(rack)
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        someHandler?.removeCallbacksAndMessages(null)
+        someHandler = null
     }
 
 }

@@ -10,6 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileassignment.databinding.FragmentRackListBinding
+import androidx.appcompat.app.AppCompatActivity
+
+
+
 
 
 class RackList : Fragment() {

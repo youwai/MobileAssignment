@@ -11,4 +11,5 @@
     <color name="grey">#FF808080</color>
     <color name="toolbar_color">#1A000000</color>
     <color name="light_gray">#efefefef</color>
+    <color name="android_green">#3DDC84</color>
 </resources>
