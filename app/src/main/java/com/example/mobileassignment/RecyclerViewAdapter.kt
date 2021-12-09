@@ -17,11 +17,12 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int){
 
-        holder.rackName.text = rackData[position].rackName.toString()
-        holder.quota.text = rackData[position].quota.toString()
-        holder.description.text = rackData[position].description.toString()
+        holder.rackName.text = rackData[position].rackName
+        holder.quota.text = rackData[position].quota
+        holder.description.text = rackData[position].description
+        Log.v("Test Read The Used Data",rackData[position].usedQuota)
 
 
         if(rackData[position].quota.toInt() <= 10){

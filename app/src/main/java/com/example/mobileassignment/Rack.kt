@@ -1,3 +1,3 @@
 package com.example.mobileassignment
 
-data class Rack(val rackName : String, val quota:String, val description: String)
+data class Rack(val rackName : String, var quota:String, var description: String, var usedQuota:String)

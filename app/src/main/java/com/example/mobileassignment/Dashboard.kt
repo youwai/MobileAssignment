@@ -19,7 +19,7 @@ class Dashboard : Fragment() {
 
     private lateinit var binding : FragmentDashboardBinding
     private lateinit var manager : RecyclerView.LayoutManager
-    private var rack : MutableList<Rack> = mutableListOf()
+    private var rackData : MutableList<Rack> = mutableListOf()
     private lateinit var viewModelData: ViewModelData
     private val db = Firebase.firestore
 
@@ -37,7 +37,13 @@ class Dashboard : Fragment() {
         readMaterial(object : FirestoreCallback {
             override fun onCallback(rack : MutableList<Rack>) {
                 viewModelData.rack = rack
-                recyclerView()
+
+                getUsedQuota(object  :UsedQuotaDataCallBack{
+                    override fun onCallback(rack: MutableList<Rack>){
+
+                        recyclerView()
+                    }
+                })
             }
         })
 
@@ -49,26 +55,44 @@ class Dashboard : Fragment() {
         fun onCallback(rack: MutableList<Rack>)
     }
 
+
+    private interface UsedQuotaDataCallBack{
+        fun onCallback(rack: MutableList<Rack>)
+
+    }
+
     private fun readMaterial(firebaseCallback : FirestoreCallback){
 
         db.collection("Rack").get().addOnSuccessListener { result ->
             for (document in result) {
-                rack.add(Rack(document.data["name"].toString(),document.data["quota"].toString(),document.data["description"].toString()))
+                rackData.add(Rack(document.data["name"].toString(),document.data["quota"].toString(),document.data["description"].toString(),"0"))
             }
-            //Log.w("failedAttempt", "yyyyyyyyyyyyyyyyyyyy")
-            firebaseCallback.onCallback(rack)
+            firebaseCallback.onCallback(rackData)
         }
             .addOnFailureListener { exception ->
 
                 Log.w("failedAttempt", "Error getting documents.", exception)
         }
+    }
 
+    private fun getUsedQuota(usedQuota :UsedQuotaDataCallBack){
 
+        for(rack in rackData){
+            db.collection("Rack").document(rack.rackName).collection("Materials").get().addOnSuccessListener {
+                rack.usedQuota = it.size().toString()
+                Log.v("Used Size",it.size().toString())
+
+                usedQuota.onCallback(rackData)
+
+            }.addOnFailureListener { exception ->
+                Log.w("failedAttempt", "Error getting documents.", exception)
+            }
+        }
     }
 
     private fun recyclerView(){
         binding.materialrecycleView.layoutManager = manager
-        binding.materialrecycleView.adapter = RecyclerViewAdapter(rack)
+        binding.materialrecycleView.adapter = RecyclerViewAdapter(viewModelData.rack)
 
     }
 
