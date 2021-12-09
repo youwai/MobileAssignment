@@ -1,6 +1,9 @@
 package com.example.mobileassignment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper.getMainLooper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileassignment.databinding.FragmentDashboardBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Dashboard : Fragment() {
@@ -22,6 +27,7 @@ class Dashboard : Fragment() {
     private var rackData : MutableList<Rack> = mutableListOf()
     private lateinit var viewModelData: ViewModelData
     private val db = Firebase.firestore
+    private var someHandler: Handler? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +55,18 @@ class Dashboard : Fragment() {
 
             }
         })
+
+        // set up date in dashbaord
+        someHandler = Handler(getMainLooper())
+        someHandler!!.postDelayed(object : Runnable {
+            @SuppressLint("SimpleDateFormat")
+            override fun run() {
+                binding.date.text = SimpleDateFormat("(EEE) dd MMM, yyyy      hh:mm:ss a").format(
+                    Date()
+                )
+                someHandler!!.postDelayed(this, 1000)
+            }
+        }, 10)
 
         return binding.root
     }
@@ -111,6 +129,12 @@ class Dashboard : Fragment() {
         binding.materialrecycleView.layoutManager = manager
         binding.materialrecycleView.adapter = RecyclerViewAdapter(viewModelData.rack)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        someHandler?.removeCallbacksAndMessages(null)
+        someHandler = null
     }
 
 }
