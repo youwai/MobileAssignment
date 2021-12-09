@@ -25,7 +25,6 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
         holder.description.text = rackData[position].description
         holder.quota.text = holder.availableQuota.toString()
 
-
         if(holder.availableQuota <= 10){
 
             holder.status.text = "Low Quota !!"
@@ -58,6 +57,12 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
                 val position :Int = absoluteAdapterPosition
 
                 //Navigate to ???
+                val activity = view.context as MainActivity
+                val fragment = RackDetails(rackData[position])
+                activity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .addToBackStack(null)
+                    .commit()
 
                 //rackData[position] Pass This Object to the Material List
                 Toast.makeText(view.context, rackData[position].rackName, Toast.LENGTH_LONG).show()

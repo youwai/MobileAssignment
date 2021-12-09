@@ -213,7 +213,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun navigationFunction(fragment : Fragment){
 
         val navigate = supportFragmentManager.beginTransaction()
-
         navigate.replace(R.id.fragmentContainer,fragment)
         navigate.commit()
 
