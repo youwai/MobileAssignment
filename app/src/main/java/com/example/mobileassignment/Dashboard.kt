@@ -35,13 +35,14 @@ class Dashboard : Fragment() {
 
 
         readMaterial(object : FirestoreCallback {
-            override fun onCallback(rack : MutableList<Rack>) {
-                //viewModelData.rack = rack
-                //recyclerView()
+            override fun onCallback() {
 
                 getUsedQuota(object : GetUsedQuota {
-                    override fun onCallback(rack : Rack) {
+                    override fun onCallback() {
+
+                        Log.v("Run 1 Only","Cincai")
                         viewModelData.rack = rackData
+
                         recyclerView()
                     }
                 })
@@ -49,18 +50,15 @@ class Dashboard : Fragment() {
             }
         })
 
-
-
-
         return binding.root
     }
 
     private interface FirestoreCallback {
-        fun onCallback(rack: MutableList<Rack>)
+        fun onCallback()
     }
 
     private interface GetUsedQuota{
-        fun onCallback(rack: Rack)
+        fun onCallback()
     }
 
     private fun readMaterial(firebaseCallback : FirestoreCallback){
@@ -68,9 +66,10 @@ class Dashboard : Fragment() {
         db.collection("Rack").get().addOnSuccessListener { result ->
             for (document in result) {
                 rackData.add(Rack(document.data["name"].toString(),document.data["quota"].toString(),document.data["description"].toString(),"0"))
+                Log.v("Read From DB",document.data["name"].toString())
             }
 
-            firebaseCallback.onCallback(rackData)
+            firebaseCallback.onCallback()
         }
             .addOnFailureListener { exception ->
 
@@ -81,19 +80,32 @@ class Dashboard : Fragment() {
 
     private fun getUsedQuota(usedQuota : GetUsedQuota){
 
+        val size = rackData.size - 1
+
+        Log.v("Rack Size",rackData[size].rackName)
+
         for(rack in rackData){
+
             db.collection("Rack").document(rack.rackName).collection("Materials").get().addOnSuccessListener {
 
-                rack.usedQuota =  it.size().toString()
+                if(rack.rackName != rackData[size].rackName) {
+                    rack.usedQuota=  it.size().toString()
+                    Log.v("Rack Name:",rack.rackName)
+                    Log.v("Test Except Last",rack.usedQuota)
+                }else {
+                    rack.usedQuota = it.size().toString()
+                    Log.v("Rack Name:",rack.rackName)
+                    Log.v("This is Last",rack.usedQuota)
+                    usedQuota.onCallback()
+                }
+                //Log.v("Test in Dashboard",rack.usedQuota)
 
-                usedQuota.onCallback(rack)
             }.addOnFailureListener { exception ->
 
                 Log.w("failedAttempt", "Error getting documents.", exception)
             }
         }
     }
-
 
     private fun recyclerView(){
         binding.materialrecycleView.layoutManager = manager

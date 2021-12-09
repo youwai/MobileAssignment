@@ -20,13 +20,13 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
 
     override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int){
 
+        holder.availableQuota = rackData[position].quota.toInt() - rackData[position].usedQuota.toInt()
         holder.rackName.text = rackData[position].rackName
-        holder.quota.text = rackData[position].quota
         holder.description.text = rackData[position].description
-        Log.v("Test Read The Used Data",rackData[position].usedQuota)
+        holder.quota.text = holder.availableQuota.toString()
 
 
-        if(rackData[position].quota.toInt() <= 10){
+        if(holder.availableQuota <= 10){
 
             holder.status.text = "Low Quota !!"
             holder.icon.setImageResource(R.drawable.ic_warning)
@@ -48,6 +48,8 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
         val quota: TextView = view.findViewById(R.id.quota)
         val status: TextView = view.findViewById(R.id.status)
         val icon: ImageView = view.findViewById(R.id.StatusIcon)
+        var availableQuota : Int = 0
+
 
         init {
             view.setOnClickListener {
