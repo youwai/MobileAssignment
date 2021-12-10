@@ -22,11 +22,11 @@ import java.util.*
 
 class Dashboard : Fragment() {
 
-    private lateinit var binding : FragmentDashboardBinding
-    private lateinit var manager : RecyclerView.LayoutManager
-    private var rackData : MutableList<Rack> = mutableListOf()
+    private lateinit var binding: FragmentDashboardBinding
+    private lateinit var manager: RecyclerView.LayoutManager
+    private var rackData: MutableList<Rack> = mutableListOf()
     private lateinit var viewModelData: ViewModelData
-    private val lowQuotaRack :MutableList<Rack> = mutableListOf()
+    private val lowQuotaRack: MutableList<Rack> = mutableListOf()
     private val db = Firebase.firestore
     private var someHandler: Handler? = null
 
@@ -34,7 +34,7 @@ class Dashboard : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_dashboard,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false)
 
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
@@ -56,8 +56,6 @@ class Dashboard : Fragment() {
         }, 10)
 
 
-
-
         return binding.root
     }
 
@@ -65,16 +63,24 @@ class Dashboard : Fragment() {
         fun onCallback()
     }
 
-    private interface GetUsedQuota{
+    private interface GetUsedQuota {
         fun onCallback()
     }
 
-    private fun readMaterial(firebaseCallback : FirestoreCallback){
+    private fun readMaterial(firebaseCallback: FirestoreCallback) {
 
         db.collection("Rack").get().addOnSuccessListener { result ->
             for (document in result) {
-                rackData.add(Rack(document.data["name"].toString(),document.data["quota"].toString(),document.data["description"].toString(),"0"))
-                Log.v("Read From DB",document.data["name"].toString())
+
+                rackData.add(
+                    Rack(
+                        document.data["name"].toString(),
+                        document.data["quota"].toString(),
+                        document.data["description"].toString(),
+                        "0"
+                    )
+                )
+                Log.v("Read From DB", document.data["name"].toString())
             }
 
             firebaseCallback.onCallback()
@@ -82,75 +88,55 @@ class Dashboard : Fragment() {
             .addOnFailureListener { exception ->
 
                 Log.w("failedAttempt", "Error getting documents.", exception)
-        }
+            }
 
     }
 
-    private fun getUsedQuota(usedQuota : GetUsedQuota){
+    private fun getUsedQuota(usedQuota: GetUsedQuota) {
 
-        val last = rackData.last()
-
-        Log.v("Rack Data",rackData.toString())
-
+        Log.v("Rack Data", rackData.toString())
 
         rackData.forEach { rack ->
 
-            Log.v("Rack In",rack.toString())
-            db.collection("Rack").document(rack.rackName).collection("Materials").get().addOnSuccessListener {
+            Log.v("Rack In", rack.toString())
+            Log.v("I AM ....",rack.rackName)
+            db.collection("Rack").document(rack.rackName).collection("Materials").get()
+                .addOnSuccessListener {
 
-                /*
-                if(rack.rackName != rackData[size].rackName) {
-                    rack.usedQuota=  it.size().toString()
-                    Log.v("No Last Rack Name:",rack.rackName)
-                    Log.v("Used Quota",rack.usedQuota)
-                }else {
                     rack.usedQuota = it.size().toString()
-                    Log.v("Last Rack Name:",rack.rackName)
-                    Log.v("Used Quota",rack.usedQuota)
-                    usedQuota.onCallback()
-                }
-                */
-                rack.usedQuota = it.size().toString()
-                Log.v("Read UsedRackName:",rack.rackName)
-                Log.v("Used Quota",rack.usedQuota)
-                if(rack.equals(last)){
+                    Log.v("Read UsedRackName:", rack.rackName)
+                    Log.v("Used Quota", rack.usedQuota)
+                    if (rack.equals(rackData.last())) {
 
-                    usedQuota.onCallback()
-                }
+                        usedQuota.onCallback()
+                    }
 
-
-            }.addOnFailureListener { exception ->
+                }.addOnFailureListener { exception ->
 
                 Log.w("failedAttempt", "Error getting documents.", exception)
             }
 
         }
 
-       // for(rack in rackData){
-
-       // }
     }
 
-    private fun recyclerView(){
+    private fun recyclerView() {
         binding.materialrecycleView.layoutManager = manager
         binding.materialrecycleView.adapter = RecyclerViewAdapter(lowQuotaRack)
 
     }
 
-    private fun filterLowQuotaRack(){
+    private fun filterLowQuotaRack() {
 
-        for(rack in viewModelData.rack){
+        for (rack in viewModelData.rack) {
 
-            Log.v("Filter Rack Name",rack.rackName)
-            Log.v("Test Filter",rack.usedQuota)
-            if((rack.quota.toInt() - rack.usedQuota.toInt()) < 10) {
-                Log.v("Add to Low List",rack.rackName)
+            Log.v("Filter Rack Name", rack.rackName)
+            Log.v("Test Filter", rack.usedQuota)
+            if ((rack.quota.toInt() - rack.usedQuota.toInt()) < 10) {
+                Log.v("Add to Low List", rack.rackName)
                 lowQuotaRack.add(rack)
             }
         }
-
-        Log.v("This is LowQ", lowQuotaRack.size.toString())
-        //return lowQuotaRack
 
     }
 
@@ -163,35 +149,34 @@ class Dashboard : Fragment() {
     override fun onPause() {
         super.onPause()
 
-        rackData.clear()
         lowQuotaRack.clear()
 
     }
 
     override fun onResume() {
         super.onResume()
-
+        rackData.clear()
 
         readMaterial(object : FirestoreCallback {
             override fun onCallback() {
 
-                Log.v("Navigation","1")
+                Log.v("Navigation", "1")
+
                 getUsedQuota(object : GetUsedQuota {
                     override fun onCallback() {
-                        Log.v("Navigation","2")
-                        //viewModelData.rack.clear()
+                        Log.v("Navigation", "2")
 
                         filterLowQuotaRack()
+
                         binding.totalRack.text = viewModelData.rack.size.toString()
                         binding.lowQuotaRack.text = lowQuotaRack.size.toString()
+
                         recyclerView()
                     }
                 })
-
             }
         })
 
     }
-
 
 }
