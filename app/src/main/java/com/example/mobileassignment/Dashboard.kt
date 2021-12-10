@@ -26,6 +26,7 @@ class Dashboard : Fragment() {
     private lateinit var manager : RecyclerView.LayoutManager
     private var rackData : MutableList<Rack> = mutableListOf()
     private lateinit var viewModelData: ViewModelData
+    val lowQuotaRack :MutableList<Rack> = mutableListOf()
     private val db = Firebase.firestore
     private var someHandler: Handler? = null
 
@@ -48,7 +49,9 @@ class Dashboard : Fragment() {
 
                         Log.v("Run 1 Only","Cincai")
                         viewModelData.rack = rackData
-
+                        filterLowQuotaRack()
+                        binding.totalRack.text = viewModelData.rack.size.toString()
+                        binding.lowQuotaRack.text = lowQuotaRack.size.toString()
                         recyclerView()
                     }
                 })
@@ -67,6 +70,9 @@ class Dashboard : Fragment() {
                 someHandler!!.postDelayed(this, 1000)
             }
         }, 10)
+
+
+
 
         return binding.root
     }
@@ -127,22 +133,21 @@ class Dashboard : Fragment() {
 
     private fun recyclerView(){
         binding.materialrecycleView.layoutManager = manager
-        binding.materialrecycleView.adapter = RecyclerViewAdapter(filterLowQuotaRack())
+        binding.materialrecycleView.adapter = RecyclerViewAdapter(lowQuotaRack)
 
     }
 
-    private fun filterLowQuotaRack():MutableList<Rack>{
-
-        val lowQuotaRack :MutableList<Rack> = mutableListOf()
+    private fun filterLowQuotaRack(){
 
         for(rack in viewModelData.rack){
 
+            Log.v("Test Filter",rack.usedQuota.toString())
             if((rack.quota.toInt() - rack.usedQuota.toInt()) < 10) {
                 lowQuotaRack.add(rack)
             }
         }
 
-        return lowQuotaRack
+        //return lowQuotaRack
 
     }
 

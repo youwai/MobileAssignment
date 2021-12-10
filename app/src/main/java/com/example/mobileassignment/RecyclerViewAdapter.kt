@@ -15,6 +15,7 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview,parent,false)
 
+        //Log.v("Rec",rackData.size.toString())
         return ViewHolder(view)
     }
 
