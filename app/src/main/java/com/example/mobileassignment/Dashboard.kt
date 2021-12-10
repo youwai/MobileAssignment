@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileassignment.databinding.FragmentDashboardBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -72,51 +73,32 @@ class Dashboard : Fragment() {
         db.collection("Rack").get().addOnSuccessListener { result ->
             for (document in result) {
 
-                rackData.add(
-                    Rack(
-                        document.data["name"].toString(),
-                        document.data["quota"].toString(),
-                        document.data["description"].toString(),
-                        "0"
+                db.collection("Rack").document(document.data["name"].toString()).collection("Materials").get().addOnSuccessListener {
+
+                    rackData.add(
+                        Rack(
+                            document.data["name"].toString(),
+                            document.data["quota"].toString(),
+                            document.data["description"].toString(),
+                            it.size().toString()
+                        )
                     )
-                )
+                    if(rackData.size.equals(result.size()))
+                        firebaseCallback.onCallback()
+                    Log.v("Rack Dt", rackData.toString())
+                    Log.v("Result Size", result.size().toString())
+                }.addOnFailureListener { exception ->
+                    Log.w("failedAttempt", "Error getting documents.", exception)
+                }
+
                 Log.v("Read From DB", document.data["name"].toString())
             }
 
-            firebaseCallback.onCallback()
-        }
-            .addOnFailureListener { exception ->
+
+        }.addOnFailureListener { exception ->
 
                 Log.w("failedAttempt", "Error getting documents.", exception)
             }
-
-    }
-
-    private fun getUsedQuota(usedQuota: GetUsedQuota) {
-
-        Log.v("Rack Data", rackData.toString())
-
-        rackData.forEach { rack ->
-
-            Log.v("Rack In", rack.toString())
-            Log.v("I AM ....",rack.rackName)
-            db.collection("Rack").document(rack.rackName).collection("Materials").get()
-                .addOnSuccessListener {
-
-                    rack.usedQuota = it.size().toString()
-                    Log.v("Read UsedRackName:", rack.rackName)
-                    Log.v("Used Quota", rack.usedQuota)
-                    if (rack.equals(rackData.last())) {
-
-                        usedQuota.onCallback()
-                    }
-
-                }.addOnFailureListener { exception ->
-
-                Log.w("failedAttempt", "Error getting documents.", exception)
-            }
-
-        }
 
     }
 
@@ -159,21 +141,13 @@ class Dashboard : Fragment() {
 
         readMaterial(object : FirestoreCallback {
             override fun onCallback() {
+                Log.v("Rack Dt 2", rackData.toString())
+                filterLowQuotaRack()
+                binding.totalRack.text = viewModelData.rack.size.toString()
+                binding.lowQuotaRack.text = lowQuotaRack.size.toString()
 
+                recyclerView()
                 Log.v("Navigation", "1")
-
-                getUsedQuota(object : GetUsedQuota {
-                    override fun onCallback() {
-                        Log.v("Navigation", "2")
-
-                        filterLowQuotaRack()
-
-                        binding.totalRack.text = viewModelData.rack.size.toString()
-                        binding.lowQuotaRack.text = lowQuotaRack.size.toString()
-
-                        recyclerView()
-                    }
-                })
             }
         })
 
