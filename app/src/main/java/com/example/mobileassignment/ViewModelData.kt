@@ -15,6 +15,7 @@ class ViewModelData: ViewModel() {
     //This is for Qr Data
     fun setValue(contents : JSONObject) {
 
+        resetData()
         serialNo = contents.getString("serialNo")
         partNo = contents.getString("partNo")
         quantity = contents.getString("quantity")
@@ -26,6 +27,7 @@ class ViewModelData: ViewModel() {
         partNo  = null
         quantity = null
     }
+
 
 
 }

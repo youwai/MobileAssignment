@@ -64,7 +64,7 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)
                     .commit()
-
+                Log.v("Navigation","Navigate")
                 //rackData[position] Pass This Object to the Material List
                 Toast.makeText(view.context, rackData[position].rackName, Toast.LENGTH_LONG).show()
             }
