@@ -19,4 +19,14 @@
     <string name="quantity">Quantity</string>
     <string name="description">Description:</string>
 
+    <!--  fragment_add_material.xml  -->
+    <string name="part_number">Part Number</string>
+    <string name="status">Status</string>
+    <string name="rack_in_date">Rack In Date</string>
+    <string name="emp_id">Emp ID</string>
+    <string name="add_button">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="serial_number">Serial Number</string>
+    <string name="new_material">New Material</string>
+
 </resources>

@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_add -> {
 
                 //Navigate to Add Materials
-                //navigationFunction(fragment object)
+                navigationFunction(AddMaterialFragment())
 
                 // Do not delete. This is to close the navigation slider
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
