@@ -9,7 +9,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="dashboard">Dashboard</string>
-    <string name="material_listing">Material listing</string>
+    <string name="material_listing">Rack listing</string>
     <string name="add_new_material">Add new material</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="logout">Logout</string>

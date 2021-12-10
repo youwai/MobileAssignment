@@ -119,7 +119,6 @@ class Dashboard : Fragment() {
                 lowQuotaRack.add(rack)
             }
         }
-
     }
 
     override fun onDestroy() {
