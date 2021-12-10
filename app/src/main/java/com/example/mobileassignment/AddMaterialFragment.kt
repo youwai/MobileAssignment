@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,20 +42,29 @@ class AddMaterialFragment : Fragment() {
         viewModelData = ViewModelProvider(this).get(ViewModelData::class.java)
 
 
-        val serial = binding.serialInput.text
-        val part = binding.partInput.text
-        val qty = binding.quantityInput.text
-        val status = binding.statusInput.text
-        val rackInDate = binding.dateInput.text
-        val emp = binding.receivedInput.text
+        var serial = binding.serialInputLayout.editText?.text
+        var part = binding.partInputLayout.editText?.text
+        var qty = binding.quantityInputLayout.editText?.text
+        var status = binding.statusInputLayout.editText?.text
+        var rackInDate = binding.dateInputLayout.editText?.text
+        var emp = binding.receivedInputLayout.editText?.text
 
         //Set Qr Code Scanner
         setupRequiredSetting()
 
-        binding.addButton.setOnClickListener {
-            uploadData(serial, part, qty, status, rackInDate, emp)
+        binding.qrButton.setOnClickListener{
+            permissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
 
-            Toast.makeText(activity, "Material Added!", Toast.LENGTH_SHORT).show()
+        binding.addButton.setOnClickListener {
+            serial = binding.serialInputLayout.editText?.text
+            part = binding.partInputLayout.editText?.text
+            qty = binding.quantityInputLayout.editText?.text
+            status = binding.statusInputLayout.editText?.text
+            rackInDate = binding.dateInputLayout.editText?.text
+            emp = binding.receivedInputLayout.editText?.text
+
+            uploadData(serial, part, qty, status, rackInDate, emp)
             clearText(serial, part, qty, status, rackInDate, emp)
         }
 
@@ -62,20 +72,16 @@ class AddMaterialFragment : Fragment() {
             clearText(serial, part, qty, status, rackInDate, emp)
         }
 
-        binding.qrButton.setOnClickListener{
-
-            permissionLauncher.launch(android.Manifest.permission.CAMERA)
-        }
-
         return binding.root
     }
 
     private fun uploadData(serial: Editable?, part: Editable?, qty: Editable?, status: Editable?, rackInDate: Editable?, emp: Editable?){
+        Log.d("Tag","I was here!")
         val hashMap = hashMapOf<String, Any>(
             "serialNo" to serial.toString(),
             "partNo" to part.toString(),
-            "quantity" to qty.toString(),
-            "status" to status.toString(),
+            "quantity" to qty.toString().toInt(),
+            "status" to status.toString().toInt(),
             "rackInDate" to rackInDate.toString(),
             "rackInBy" to emp.toString(),
             "rackOutBy" to "",
@@ -93,7 +99,12 @@ class AddMaterialFragment : Fragment() {
             else -> "Rack9"
         }
         db.collection("Rack").document(rackPath).collection("Materials").document(serial.toString())
-            .set(hashMap)
+            .set(hashMap).addOnSuccessListener {
+                Toast.makeText(activity, "Material Added!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener{
+                Toast.makeText(activity, "Some error had occurred!", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun clearText(serial: Editable?, part: Editable?, qty: Editable?, status: Editable?, rackInDate: Editable?, emp: Editable?){
@@ -106,7 +117,6 @@ class AddMaterialFragment : Fragment() {
     }
 
     private fun setDataToView(){
-
         binding.serialInput.setText(viewModelData.serialNo)
         binding.partInput.setText(viewModelData.partNo)
         binding.quantityInput.setText(viewModelData.quantity)
@@ -176,7 +186,6 @@ class AddMaterialFragment : Fragment() {
             }
             //Navigate to Temp Fragment to Show the data
             setDataToView()
-
         }
     }
 
