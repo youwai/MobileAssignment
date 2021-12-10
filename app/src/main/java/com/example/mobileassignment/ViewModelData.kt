@@ -10,6 +10,8 @@ class ViewModelData: ViewModel() {
     var quantity : String? = null
     var rack : MutableList<Rack> = mutableListOf()
 
+    var emp: Employee? = null
+
 
 
     //This is for Qr Data

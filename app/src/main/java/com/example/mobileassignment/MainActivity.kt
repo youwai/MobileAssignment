@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         viewModelData = ViewModelProvider(this).get(ViewModelData::class.java)
 
         val loginEmp = intent.getSerializableExtra("user") as Employee?
+        viewModelData.emp = loginEmp
 
         //toolbar
         setSupportActionBar(binding.toolbar)
@@ -211,10 +212,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     //This Function is call to navigate to other fragment
     private fun navigationFunction(fragment : Fragment){
-
-        val navigate = supportFragmentManager.beginTransaction()
-        navigate.replace(R.id.fragmentContainer,fragment)
-        navigate.commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer,fragment)
+            .addToBackStack(null)
+            .commit()
 
     }
 
