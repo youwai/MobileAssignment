@@ -39,7 +39,7 @@ class Dashboard : Fragment() {
 
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
-        viewModelData.rack = rackData
+       //viewModelData.rack = rackData
 
         manager = LinearLayoutManager(requireContext())
 
@@ -85,8 +85,9 @@ class Dashboard : Fragment() {
                     )
                     if(rackData.size.equals(result.size()))
                         firebaseCallback.onCallback()
-                    Log.v("Rack Dt", rackData.toString())
-                    Log.v("Result Size", result.size().toString())
+
+                    //Log.v("Rack Dt", rackData.toString())
+                    //Log.v("Result Size", result.size().toString())
                 }.addOnFailureListener { exception ->
                     Log.w("failedAttempt", "Error getting documents.", exception)
                 }
@@ -138,10 +139,12 @@ class Dashboard : Fragment() {
     override fun onResume() {
         super.onResume()
         rackData.clear()
+        viewModelData.rack.clear()
 
         readMaterial(object : FirestoreCallback {
             override fun onCallback() {
                 Log.v("Rack Dt 2", rackData.toString())
+                reArrangeData()
                 filterLowQuotaRack()
                 binding.totalRack.text = viewModelData.rack.size.toString()
                 binding.lowQuotaRack.text = lowQuotaRack.size.toString()
@@ -152,5 +155,20 @@ class Dashboard : Fragment() {
         })
 
     }
+
+    private fun reArrangeData(){
+
+        for(i in 0..rackData.size){
+
+            for(rack in rackData){
+
+                if(rack.rackName.last().toString().toInt() == i){
+                        Log.v("check2", rack.rackName.toString())
+                        viewModelData.rack.add(rack)
+                }
+            }
+        }
+    }
+
 
 }
