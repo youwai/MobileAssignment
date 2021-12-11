@@ -14,22 +14,19 @@ import com.example.mobileassignment.databinding.FragmentRackListBinding
 import androidx.appcompat.app.AppCompatActivity
 
 
-
-
-
 class RackList : Fragment() {
 
-    private lateinit var binding :FragmentRackListBinding
-    private lateinit var manager :RecyclerView.LayoutManager
-    private lateinit var viewModelData :ViewModelData
-    private var racksAdapter :RecyclerViewAdapter? = null
+    private lateinit var binding: FragmentRackListBinding
+    private lateinit var manager: RecyclerView.LayoutManager
+    private lateinit var viewModelData: ViewModelData
+    private var racksAdapter: RecyclerViewAdapter? = null
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_rack_list,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_rack_list, container, false)
         manager = LinearLayoutManager(requireContext())
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
@@ -38,7 +35,7 @@ class RackList : Fragment() {
         binding.rackListRecycleView.adapter = racksAdapter
 
 
-        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchBar.clearFocus()

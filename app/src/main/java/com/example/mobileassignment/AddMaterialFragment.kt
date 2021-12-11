@@ -220,8 +220,6 @@ class AddMaterialFragment : Fragment() {
             }
         }
     }
-
-
 }
 
 

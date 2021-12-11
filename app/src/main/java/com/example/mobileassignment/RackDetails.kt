@@ -34,6 +34,8 @@ class RackDetails (private val selectedRack: Rack) : Fragment() {
 
         binding.rack = selectedRack
 
+
+
         readData(object : FirestoreCallback {
             override fun onCallback(materialsList: ArrayList<Materials>) {
                 Log.d("check", "completed")

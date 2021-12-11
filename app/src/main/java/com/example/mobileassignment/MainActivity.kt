@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -82,6 +83,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
+        else if (supportFragmentManager.backStackEntryCount > 0) {
+//            supportFragmentManager.popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//            supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, Dashboard()).commit()
+
+//            for (i in 0 until supportFragmentManager.backStackEntryCount) {
+//                supportFragmentManager.popBackStack()
+//            }
+
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
         else{
             super.onBackPressed()
         }
@@ -91,8 +102,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when(item.itemId) {
             R.id.nav_dashboard -> {
 
-//              Navigate To Dashboard
-                navigationFunction(Dashboard())
+                //Navigate To Dashboard
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
                 // Do not delete. This is to close the navigation slider
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -212,15 +223,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     //This Function is call to navigate to other fragment
     private fun navigationFunction(fragment : Fragment){
+//        if(supportFragmentManager.backStackEntryCount >= 1) {
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragmentContainer, fragment)
+//                .commit()
+//        }
+//        else {
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragmentContainer, fragment)
+//                .addToBackStack("null")
+//                .commit()
+//        }
+
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer,fragment)
+            .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
 
-        supportFragmentManager.backStackEntryCount
-
+        Log.d("navigation", supportFragmentManager.backStackEntryCount.toString())
     }
-
-
-
 }
