@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             //Navigate to Temp Fragment to Show the data
-            navigationFunction(TempFragment())
+            navigationFunction(Retrieve())
         }
     }
 
