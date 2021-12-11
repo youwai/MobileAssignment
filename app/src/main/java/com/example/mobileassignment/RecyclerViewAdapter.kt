@@ -1,21 +1,24 @@
 package com.example.mobileassignment
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
+class RecyclerViewAdapter(private var rackData: MutableList<Rack>):RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(), Filterable{
+
+    var tempRackData : MutableList<Rack> = mutableListOf()
+
+    init {
+        tempRackData.addAll(rackData)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview,parent,false)
 
-        //Log.v("Rec",rackData.size.toString())
         return ViewHolder(view)
     }
 
@@ -50,7 +53,6 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
         val icon: ImageView = view.findViewById(R.id.StatusIcon)
         var availableQuota : Int = 0
 
-
         init {
             view.setOnClickListener {
 
@@ -70,5 +72,52 @@ class RecyclerViewAdapter(private val rackData: MutableList<Rack>):RecyclerView.
             }
         }
     }
+
+    override fun getFilter(): Filter {
+
+        return listFilter
+    }
+
+
+    private val listFilter = object: Filter(){
+
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+
+            val filterList = FilterResults()
+
+            if(constraint == null || constraint.isEmpty()){
+
+                filterList.count = tempRackData.size
+                filterList.values = tempRackData
+            }
+            else{
+                val filterPattern = constraint.toString().lowercase()
+
+                val racks : MutableList<Rack> = mutableListOf()
+
+                for(rack in tempRackData){
+                    if(rack.rackName.lowercase().contains(filterPattern)){
+                        racks.add(rack)
+                    }
+                }
+                filterList.count = racks.size
+                filterList.values = racks
+            }
+
+            return filterList
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+
+            rackData = results!!.values as MutableList<Rack>
+            notifyDataSetChanged()
+
+        }
+
+
+
+    }
+
 
 }

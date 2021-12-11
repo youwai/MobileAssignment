@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileassignment.databinding.FragmentDashboardBinding
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,6 +30,9 @@ class Dashboard : Fragment() {
     private val lowQuotaRack: MutableList<Rack> = mutableListOf()
     private val db = Firebase.firestore
     private var someHandler: Handler? = null
+    @SuppressLint("SimpleDateFormat")
+    private val todayDate :String = SimpleDateFormat("dd/MM/yyyy").format(Date()).toString()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +44,8 @@ class Dashboard : Fragment() {
 
        //viewModelData.rack = rackData
 
+        Log.v("This is Date",todayDate)
         manager = LinearLayoutManager(requireContext())
-
 
         // set up date in dashbaord
         someHandler = Handler(getMainLooper())
@@ -64,9 +67,6 @@ class Dashboard : Fragment() {
         fun onCallback()
     }
 
-    private interface GetUsedQuota {
-        fun onCallback()
-    }
 
     private fun readMaterial(firebaseCallback: FirestoreCallback) {
 
@@ -81,20 +81,28 @@ class Dashboard : Fragment() {
                             document.data["quota"].toString(),
                             document.data["description"].toString(),
                             it.size().toString()
+
                         )
                     )
+                    for(materials in it){
+                        val material = materials.toObject<Materials>()
+                        if(material.rackInDate.equals(todayDate)){
+                            when(material.status){
+                                2 -> viewModelData.todayInMaterial.add(material)
+                                3 -> viewModelData.todayOutMaterial.add(material)
+                            }
+                        }
+                    }
+
                     if(rackData.size.equals(result.size()))
                         firebaseCallback.onCallback()
 
-                    //Log.v("Rack Dt", rackData.toString())
-                    //Log.v("Result Size", result.size().toString())
                 }.addOnFailureListener { exception ->
                     Log.w("failedAttempt", "Error getting documents.", exception)
                 }
 
                 Log.v("Read From DB", document.data["name"].toString())
             }
-
 
         }.addOnFailureListener { exception ->
 
@@ -113,10 +121,8 @@ class Dashboard : Fragment() {
 
         for (rack in viewModelData.rack) {
 
-            Log.v("Filter Rack Name", rack.rackName)
-            Log.v("Test Filter", rack.usedQuota)
             if ((rack.quota.toInt() - rack.usedQuota.toInt()) < 10) {
-                Log.v("Add to Low List", rack.rackName)
+
                 lowQuotaRack.add(rack)
             }
         }
@@ -137,19 +143,25 @@ class Dashboard : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        //Clear the data inside the rackData before read the data from database.
         rackData.clear()
-        viewModelData.rack.clear()
+        //Clear the view model data before read and store the data from the data base.
+        viewModelData.resetDbData()
 
         readMaterial(object : FirestoreCallback {
             override fun onCallback() {
-                Log.v("Rack Dt 2", rackData.toString())
+                //This function is to Rearrange the data read from the database and store in to viewModel Data
                 reArrangeData()
-                filterLowQuotaRack()
-                binding.totalRack.text = viewModelData.rack.size.toString()
-                binding.lowQuotaRack.text = lowQuotaRack.size.toString()
 
+                //This function is to Filter the the lower quota Rack
+                filterLowQuotaRack()
+
+                //This function is to set the data to the view
+                setDatatoView()
+
+                //To Start the Recycle View
                 recyclerView()
-                Log.v("Navigation", "1")
             }
         })
 
@@ -157,16 +169,23 @@ class Dashboard : Fragment() {
 
     private fun reArrangeData(){
 
-        for(i in 0..rackData.size){
-
+        for(i in 1..rackData.size){
+            Log.v("check2", i.toString())
             for(rack in rackData){
 
                 if(rack.rackName.last().toString().toInt() == i){
-                        Log.v("check2", rack.rackName.toString())
                         viewModelData.rack.add(rack)
                 }
             }
         }
+    }
+
+    private fun setDatatoView(){
+
+        binding.totalRack.text = viewModelData.rack.size.toString()
+        binding.lowQuotaRack.text = lowQuotaRack.size.toString()
+        binding.todayIn.text = viewModelData.todayInMaterial.size.toString()
+        binding.todayOut.text = viewModelData.todayOutMaterial.size.toString()
     }
 
 
