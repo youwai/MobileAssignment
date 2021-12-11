@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when(item.itemId) {
             R.id.nav_dashboard -> {
 
-//                Navigate To Dashboard
+//              Navigate To Dashboard
                 navigationFunction(Dashboard())
 
                 // Do not delete. This is to close the navigation slider
@@ -216,6 +216,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .replace(R.id.fragmentContainer,fragment)
             .addToBackStack(null)
             .commit()
+
+        supportFragmentManager.backStackEntryCount
 
     }
 
