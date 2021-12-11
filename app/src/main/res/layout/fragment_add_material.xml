@@ -38,10 +38,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/serialInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/addTitle"
+            android:layout_alignParentBottom="false"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="45dp"
             app:endIconMode="clear_text">
 
@@ -64,7 +67,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="45dp"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="45dp">
+            android:layout_marginEnd="45dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/partInput"
@@ -81,7 +85,8 @@
             android:layout_alignParentEnd="false"
             android:layout_marginStart="45dp"
             android:layout_marginTop="25dp"
-            android:duplicateParentState="false">
+            android:duplicateParentState="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/quantityInput"
@@ -99,7 +104,8 @@
             android:layout_alignParentStart="false"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="45dp">
+            android:layout_marginEnd="45dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/statusInput"
@@ -118,7 +124,8 @@
             android:layout_below="@id/quantityInputLayout"
             android:layout_marginStart="45dp"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="45dp">
+            android:layout_marginEnd="45dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dateInput"
@@ -135,7 +142,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="45dp"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="45dp">
+            android:layout_marginEnd="45dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/receivedInput"

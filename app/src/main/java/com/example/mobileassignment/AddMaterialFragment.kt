@@ -20,6 +20,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.zxing.integration.android.IntentIntegrator
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddMaterialFragment : Fragment() {
 
@@ -39,15 +41,16 @@ class AddMaterialFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_add_material, container, false)
 
         //Create ViewModel (Owner : this activity)
-        viewModelData = ViewModelProvider(this).get(ViewModelData::class.java)
-
+        viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
         var serial = binding.serialInputLayout.editText?.text
         var part = binding.partInputLayout.editText?.text
         var qty = binding.quantityInputLayout.editText?.text
-        var status = binding.statusInputLayout.editText?.text
-        var rackInDate = binding.dateInputLayout.editText?.text
-        var emp = binding.receivedInputLayout.editText?.text
+
+        getRetrieveDate()
+        getRetrieveBy()
+
+        binding.statusInput.setText("2")
 
         //Set Qr Code Scanner
         setupRequiredSetting()
@@ -60,23 +63,22 @@ class AddMaterialFragment : Fragment() {
             serial = binding.serialInputLayout.editText?.text
             part = binding.partInputLayout.editText?.text
             qty = binding.quantityInputLayout.editText?.text
-            status = binding.statusInputLayout.editText?.text
-            rackInDate = binding.dateInputLayout.editText?.text
-            emp = binding.receivedInputLayout.editText?.text
+            val status = binding.statusInputLayout.editText?.text
+            val rackInDate = binding.dateInputLayout.editText?.text
+            val emp = binding.receivedInputLayout.editText?.text
 
             uploadData(serial, part, qty, status, rackInDate, emp)
-            clearText(serial, part, qty, status, rackInDate, emp)
+            clearText(serial, part, qty)
         }
 
         binding.cancelButton.setOnClickListener{
-            clearText(serial, part, qty, status, rackInDate, emp)
+            clearText(serial, part, qty)
         }
 
         return binding.root
     }
 
     private fun uploadData(serial: Editable?, part: Editable?, qty: Editable?, status: Editable?, rackInDate: Editable?, emp: Editable?){
-        Log.d("Tag","I was here!")
         val hashMap = hashMapOf<String, Any>(
             "serialNo" to serial.toString(),
             "partNo" to part.toString(),
@@ -98,28 +100,43 @@ class AddMaterialFragment : Fragment() {
             'H' -> "Rack8"
             else -> "Rack9"
         }
+
         db.collection("Rack").document(rackPath).collection("Materials").document(serial.toString())
             .set(hashMap).addOnSuccessListener {
-                Toast.makeText(activity, "Material Added!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Material Added to $rackPath!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener{
                 Toast.makeText(activity, "Some error had occurred!", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun clearText(serial: Editable?, part: Editable?, qty: Editable?, status: Editable?, rackInDate: Editable?, emp: Editable?){
+    private fun clearText(serial: Editable?, part: Editable?, qty: Editable?){
         serial?.clear()
         part?.clear()
         qty?.clear()
-        status?.clear()
-        rackInDate?.clear()
-        emp?.clear()
     }
 
     private fun setDataToView(){
         binding.serialInput.setText(viewModelData.serialNo)
         binding.partInput.setText(viewModelData.partNo)
         binding.quantityInput.setText(viewModelData.quantity)
+
+    }
+
+    private fun getRetrieveBy() {
+
+        val id = viewModelData.emp?.id.toString()
+
+        binding.receivedInput.setText(id)
+
+    }
+
+    private fun getRetrieveDate() {
+
+        val date = SimpleDateFormat("dd/MM/yyyy").format(Date())
+
+        binding.dateInput.setText(date)
+
 
     }
 
