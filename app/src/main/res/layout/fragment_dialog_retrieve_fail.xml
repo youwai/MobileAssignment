@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodelData"
+            type="com.example.mobileassignment.ViewModelData" />
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/dialog_rf1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:text="Material Cannot Be Retrieved"
+            android:textAlignment="center"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/dialog_rf4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialog_rf1"
+            android:layout_centerHorizontal="true"
+            android:text="[ STATUS ]"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/dialog_rf2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialog_rf4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:text="null: Data not found in database"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/dialog_rf3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialog_rf2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="1/3 : Incorrect STATUS for retrieval"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/retrieve_fail_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialog_rf3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:text="OK" />
+    </RelativeLayout>
+</layout>

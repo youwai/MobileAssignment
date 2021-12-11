@@ -6,14 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.mobileassignment.databinding.ActivityRetrieveBinding
-import com.example.mobileassignment.databinding.FragmentTempBinding
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -59,13 +56,21 @@ class Retrieve : Fragment() {
 
                 val stat = binding.statusLayout.editText?.text.toString()
 
-                if(stat == "2" ){
-                    binding.retrieveButton.setOnClickListener{
+                if (stat == "2") {
+                    binding.retrieveButton.setOnClickListener {
                         requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainer,RetrieveSuccess(record))
+                            .replace(R.id.fragmentContainer, RetrieveSuccess(record))
                             .commit()
                     }
 
+                }
+                else{
+                    binding.retrieveButton.setOnClickListener{
+                        val dialogRB = DialogRetrieveFail()
+
+                        dialogRB.show(requireActivity().supportFragmentManager, "customDialog")
+
+                    }
                 }
 
 
@@ -73,9 +78,9 @@ class Retrieve : Fragment() {
         })
 
 
-        binding.cancelButton.setOnClickListener{
+        binding.cancelButton.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer,Dashboard())
+                .replace(R.id.fragmentContainer, Dashboard())
                 .commit()
         }
 
@@ -105,6 +110,7 @@ class Retrieve : Fragment() {
 
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
+                Toast.makeText(activity,"Error finding data in database !",Toast.LENGTH_SHORT).show()
             }
 
     }
