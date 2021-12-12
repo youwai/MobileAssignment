@@ -82,7 +82,9 @@ class RackList : Fragment() {
 
     private fun recyclerView() {
         binding.rackListRecycleView.layoutManager = manager
-        binding.rackListRecycleView.adapter  = RecyclerViewAdapter(rackData)
+        racksAdapter  = RecyclerViewAdapter(rackData)
+        binding.rackListRecycleView.adapter = racksAdapter
+
 
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
