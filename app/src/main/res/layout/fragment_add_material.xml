@@ -44,7 +44,7 @@
             android:layout_below="@id/addTitle"
             android:layout_alignParentBottom="false"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="45dp"
             app:endIconMode="clear_text">
 
@@ -61,14 +61,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/partInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/serialInputLayout"
             android:layout_alignParentStart="true"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="45dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+            app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/partInput"
@@ -79,14 +80,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/quantityInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/partInputLayout"
             android:layout_alignParentEnd="false"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:duplicateParentState="false"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+            app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/quantityInput"
@@ -98,14 +100,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/statusInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/partInputLayout"
             android:layout_alignParentStart="false"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="45dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="45dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/statusInput"
@@ -113,49 +115,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
-                android:hint="@string/status"
-                android:inputType="number"
+                android:editable="false"
                 android:focusable="false"
-                android:editable="false"/>
+                android:hint="@string/status"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dateInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/quantityInputLayout"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="45dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="45dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dateInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/rack_in_date"
                 android:editable="false"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:hint="@string/rack_in_date" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/receivedInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/dateInputLayout"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="45dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="45dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/receivedInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/emp_id"
+                android:editable="false"
                 android:focusable="false"
-                android:editable="false"/>
+                android:hint="@string/emp_id" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -165,7 +167,7 @@
             android:layout_below="@id/receivedInputLayout"
             android:layout_alignParentStart="true"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:text="@string/add_button" />
 
         <Button
@@ -174,7 +176,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/receivedInputLayout"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="45dp"
             android:text="@string/clear" />
 
