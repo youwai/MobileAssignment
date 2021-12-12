@@ -25,8 +25,8 @@
     <string name="rack_in_date">Rack In Date</string>
     <string name="emp_id">Emp ID</string>
     <string name="add_button">Add</string>
-    <string name="cancel">Cancel</string>
     <string name="serial_number">Serial Number</string>
     <string name="new_material">New Material</string>
+    <string name="clear">Clear</string>
 
 </resources>

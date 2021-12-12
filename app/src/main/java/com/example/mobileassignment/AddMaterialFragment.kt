@@ -69,14 +69,14 @@ class AddMaterialFragment : Fragment() {
             val emp = binding.receivedInputLayout.editText?.text
 
             when {
-                serial == null -> {
-                    binding.serialInputLayout.error = ""
+                serial?.isEmpty() == true -> {
+                    binding.serialInputLayout.error = " "
                 }
-                part == null -> {
-                    binding.partInputLayout.error = ""
+                part?.isEmpty() == true -> {
+                    binding.partInputLayout.error = " "
                 }
-                qty == null -> {
-                    binding.quantityInputLayout.error = ""
+                qty?.isEmpty() == true -> {
+                    binding.quantityInputLayout.error = " "
                 }
                 else -> {
                     uploadData(serial, part, qty, status, rackInDate, emp)
