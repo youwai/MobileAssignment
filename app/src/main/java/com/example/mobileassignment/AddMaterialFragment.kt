@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.mobileassignment.databinding.FragmentAddMaterialBinding
@@ -67,6 +68,18 @@ class AddMaterialFragment : Fragment() {
             val status = binding.statusInputLayout.editText?.text
             val rackInDate = binding.dateInputLayout.editText?.text
             val emp = binding.receivedInputLayout.editText?.text
+
+            binding.serialInput.doOnTextChanged { _, _, _, _ ->
+                binding.serialInputLayout.error = null
+            }
+
+            binding.partInput.doOnTextChanged { _, _, _, _ ->
+                binding.partInputLayout.error = null
+                }
+
+            binding.quantityInput.doOnTextChanged { _, _, _, _ ->
+                binding.quantityInputLayout.error = null
+            }
 
             when {
                 serial?.isEmpty() == true -> {
