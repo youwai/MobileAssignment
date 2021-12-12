@@ -80,21 +80,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
-        if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-        }
-        else if (supportFragmentManager.backStackEntryCount > 0) {
-//            supportFragmentManager.popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//            supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, Dashboard()).commit()
+        when {
+            binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+            }
+            supportFragmentManager.backStackEntryCount > 0 -> {
+    //            supportFragmentManager.popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    //            supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, Dashboard()).commit()
 
-//            for (i in 0 until supportFragmentManager.backStackEntryCount) {
-//                supportFragmentManager.popBackStack()
-//            }
+    //            for (i in 0 until supportFragmentManager.backStackEntryCount) {
+    //                supportFragmentManager.popBackStack()
+    //            }
 
-            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        }
-        else{
-            super.onBackPressed()
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 
@@ -120,6 +122,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 //Navigate to Add Materials
                 navigationFunction(AddMaterialFragment())
+
+//                supportActionBar?.setDisplayShowTitleEnabled(true)
+//                supportActionBar?.title = "Add new material"
+//                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//                supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
                 // Do not delete. This is to close the navigation slider
                 binding.drawerLayout.closeDrawer(GravityCompat.START)

@@ -14,6 +14,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.toObject
 import android.widget.TextView
+import com.example.mobileassignment.databinding.ActivityMainBinding
 
 
 class RackDetails (private val selectedRack: Rack) : Fragment() {
@@ -34,7 +35,13 @@ class RackDetails (private val selectedRack: Rack) : Fragment() {
 
         binding.rack = selectedRack
 
+        val quotaAvailable = (selectedRack.quota.toInt() - selectedRack.usedQuota.toInt())
+        binding.quantityAvailable.text = quotaAvailable.toString()
 
+        // if low quota show the indicator
+        if (quotaAvailable <= 10) {
+            binding.indicator.visibility = View.VISIBLE
+        }
 
         readData(object : FirestoreCallback {
             override fun onCallback(materialsList: ArrayList<Materials>) {
@@ -98,5 +105,4 @@ class RackDetails (private val selectedRack: Rack) : Fragment() {
     private interface FirestoreCallback {
         fun onCallback(materialsList: ArrayList<Materials>)
     }
-
 }
