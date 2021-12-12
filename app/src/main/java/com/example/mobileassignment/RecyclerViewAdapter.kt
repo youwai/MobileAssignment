@@ -1,6 +1,7 @@
 package com.example.mobileassignment
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,8 +29,7 @@ class RecyclerViewAdapter(private var rackData: MutableList<Rack>) :
 
     override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int) {
 
-        holder.availableQuota =
-            rackData[position].quota.toInt() - rackData[position].usedQuota.toInt()
+        holder.availableQuota = rackData[position].quota.toInt() - rackData[position].usedQuota.toInt()
         holder.rackName.text = rackData[position].rackName
         holder.description.text = rackData[position].description
         holder.quota.text = holder.availableQuota.toString()
@@ -37,9 +37,11 @@ class RecyclerViewAdapter(private var rackData: MutableList<Rack>) :
         if (holder.availableQuota <= 10) {
 
             holder.status.text = "Low Quota !!"
+            holder.rackName.setTextColor(Color.parseColor("#fa4848"))
             holder.icon.setImageResource(R.drawable.ic_warning)
         } else {
             holder.status.text = "Quota Available"
+            holder.rackName.setTextColor(Color.parseColor("#62b4ec"))
             holder.icon.setImageResource(R.drawable.ic_available)
         }
     }
@@ -70,8 +72,7 @@ class RecyclerViewAdapter(private var rackData: MutableList<Rack>) :
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)
                     .commit()
-                Log.v("Navigation", "Navigate")
-                //rackData[position] Pass This Object to the Material List
+
                 Toast.makeText(view.context, rackData[position].rackName, Toast.LENGTH_LONG).show()
             }
         }
@@ -81,7 +82,6 @@ class RecyclerViewAdapter(private var rackData: MutableList<Rack>) :
 
         return listFilter
     }
-
 
     private val listFilter = object : Filter() {
 

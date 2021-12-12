@@ -8,13 +8,9 @@ class ViewModelData: ViewModel() {
     var serialNo : String? = null
     var partNo : String? = null
     var quantity : String? = null
-    var rack : MutableList<Rack> = mutableListOf()
     var todayInMaterial :MutableList<Materials> = mutableListOf()
     var todayOutMaterial :MutableList<Materials> = mutableListOf()
-
     var emp: Employee? = null
-
-
 
     //This is for Qr Data
     fun setValue(contents : JSONObject) {
@@ -33,7 +29,6 @@ class ViewModelData: ViewModel() {
     }
 
     fun resetDbData(){
-        rack.clear()
         todayInMaterial.clear()
         todayOutMaterial.clear()
     }

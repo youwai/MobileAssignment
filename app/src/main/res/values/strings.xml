@@ -28,5 +28,6 @@
     <string name="serial_number">Serial Number</string>
     <string name="new_material">New Material</string>
     <string name="clear">Clear</string>
+    <string name="searchTitle">Search</string>
 
 </resources>
