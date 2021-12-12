@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.mobileassignment.databinding.FragmentAddMaterialBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.zxing.integration.android.IntentIntegrator
@@ -67,8 +68,21 @@ class AddMaterialFragment : Fragment() {
             val rackInDate = binding.dateInputLayout.editText?.text
             val emp = binding.receivedInputLayout.editText?.text
 
-            uploadData(serial, part, qty, status, rackInDate, emp)
-            clearText(serial, part, qty)
+            when {
+                serial == null -> {
+                    binding.serialInputLayout.error = ""
+                }
+                part == null -> {
+                    binding.partInputLayout.error = ""
+                }
+                qty == null -> {
+                    binding.quantityInputLayout.error = ""
+                }
+                else -> {
+                    uploadData(serial, part, qty, status, rackInDate, emp)
+                    clearText(serial, part, qty)
+                }
+            }
         }
 
         binding.cancelButton.setOnClickListener{
@@ -103,7 +117,7 @@ class AddMaterialFragment : Fragment() {
 
         db.collection("Rack").document(rackPath).collection("Materials").document(serial.toString())
             .set(hashMap).addOnSuccessListener {
-                Toast.makeText(activity, "Material Added to $rackPath!", Toast.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), "Material Added to $rackPath!", Snackbar.LENGTH_LONG).show()
             }
             .addOnFailureListener{
                 Toast.makeText(activity, "Some error had occurred!", Toast.LENGTH_SHORT).show()

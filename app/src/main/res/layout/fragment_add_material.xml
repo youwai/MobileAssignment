@@ -114,7 +114,9 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:hint="@string/status"
-                android:inputType="number" />
+                android:inputType="number"
+                android:focusable="false"
+                android:editable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -131,7 +133,9 @@
                 android:id="@+id/dateInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/rack_in_date" />
+                android:hint="@string/rack_in_date"
+                android:editable="false"
+                android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -149,7 +153,9 @@
                 android:id="@+id/receivedInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/emp_id" />
+                android:hint="@string/emp_id"
+                android:focusable="false"
+                android:editable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
