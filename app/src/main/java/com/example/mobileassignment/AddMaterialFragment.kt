@@ -81,20 +81,18 @@ class AddMaterialFragment : Fragment() {
                 binding.quantityInputLayout.error = null
             }
 
-            when {
-                serial?.isEmpty() == true -> {
-                    binding.serialInputLayout.error = " "
-                }
-                part?.isEmpty() == true -> {
-                    binding.partInputLayout.error = " "
-                }
-                qty?.isEmpty() == true -> {
-                    binding.quantityInputLayout.error = " "
-                }
-                else -> {
-                    uploadData(serial, part, qty, status, rackInDate, emp)
-                    clearText(serial, part, qty)
-                }
+            if(serial?.isEmpty() == true)  {
+                binding.serialInputLayout.error = " "
+            }
+            if (part?.isEmpty() == true)  {
+                binding.partInputLayout.error = " "
+            }
+            if(qty?.isEmpty() == true) {
+                binding.quantityInputLayout.error = " "
+            }
+            if(serial?.isEmpty() == false && part?.isEmpty() == false && qty?.isEmpty() == false) {
+                uploadData(serial, part, qty, status, rackInDate, emp)
+                clearText(serial, part, qty)
             }
         }
 
