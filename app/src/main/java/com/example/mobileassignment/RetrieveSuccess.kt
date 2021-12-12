@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.mobileassignment.databinding.FragmentRetrieveSuccessBinding
 import com.google.firebase.firestore.ktx.firestore
@@ -90,9 +91,12 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
             }
 
         binding.buttonRetrieveSuccess.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, Dashboard())
-                .commit()
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragmentContainer, Dashboard())
+//                .addToBackStack(null)
+//                .commit()
+
+            requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
     }

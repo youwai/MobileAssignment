@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.mobileassignment.databinding.ActivityRetrieveBinding
 import com.google.firebase.firestore.ktx.firestore
@@ -60,6 +61,7 @@ class Retrieve : Fragment() {
                     binding.retrieveButton.setOnClickListener {
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragmentContainer, RetrieveSuccess(record))
+                            .addToBackStack(null)
                             .commit()
                     }
 
@@ -79,9 +81,7 @@ class Retrieve : Fragment() {
 
 
         binding.cancelButton.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, Dashboard())
-                .commit()
+            requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
         return binding.root

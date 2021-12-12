@@ -45,10 +45,6 @@ class AddMaterialFragment : Fragment() {
         //Create ViewModel (Owner : this activity)
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
-        var serial = binding.serialInputLayout.editText?.text
-        var part = binding.partInputLayout.editText?.text
-        var qty = binding.quantityInputLayout.editText?.text
-
         getRetrieveDate()
         getRetrieveBy()
 
@@ -62,9 +58,9 @@ class AddMaterialFragment : Fragment() {
         }
 
         binding.addButton.setOnClickListener {
-            serial = binding.serialInputLayout.editText?.text
-            part = binding.partInputLayout.editText?.text
-            qty = binding.quantityInputLayout.editText?.text
+            val serial = binding.serialInputLayout.editText?.text
+            val part = binding.partInputLayout.editText?.text
+            val qty = binding.quantityInputLayout.editText?.text
             val status = binding.statusInputLayout.editText?.text
             val rackInDate = binding.dateInputLayout.editText?.text
             val emp = binding.receivedInputLayout.editText?.text
@@ -92,12 +88,16 @@ class AddMaterialFragment : Fragment() {
             }
             if(serial?.isEmpty() == false && part?.isEmpty() == false && qty?.isEmpty() == false) {
                 uploadData(serial, part, qty, status, rackInDate, emp)
-                clearText(serial, part, qty)
+                binding.serialInput.text?.clear()
+                binding.partInput.text?.clear()
+                binding.quantityInput.text?.clear()
             }
         }
 
         binding.cancelButton.setOnClickListener{
-            clearText(serial, part, qty)
+            binding.serialInput.text?.clear()
+            binding.partInput.text?.clear()
+            binding.quantityInput.text?.clear()
         }
 
         return binding.root
@@ -133,12 +133,6 @@ class AddMaterialFragment : Fragment() {
             .addOnFailureListener{
                 Toast.makeText(activity, "Some error had occurred!", Toast.LENGTH_SHORT).show()
             }
-    }
-
-    private fun clearText(serial: Editable?, part: Editable?, qty: Editable?){
-        serial?.clear()
-        part?.clear()
-        qty?.clear()
     }
 
     private fun setDataToView(){
