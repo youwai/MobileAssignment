@@ -12,6 +12,8 @@ class ViewModelData: ViewModel() {
     var todayOutMaterial :MutableList<Materials> = mutableListOf()
     var emp: Employee? = null
 
+    var selectedRack: Rack? = null
+
     //This is for Qr Data
     fun setValue(contents : JSONObject) {
 

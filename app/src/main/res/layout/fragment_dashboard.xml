@@ -8,7 +8,6 @@
         android:layout_height="match_parent">
 
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,6 +25,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Dashboard"
                     android:textColor="@color/black"
@@ -59,6 +59,7 @@
                     android:layout_width="180dp"
                     android:layout_height="2dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="4dp"
                     android:background="@color/grey_50" />
 
                 <TextView
@@ -68,10 +69,10 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
-                    android:textColor="@color/black"
                     android:text="Date"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/summary"
@@ -107,10 +108,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginHorizontal="8dp"
-                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
                     android:background="@color/light_gray"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
 
@@ -126,8 +127,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/black"
                             android:text="0"
+                            android:textColor="@color/black"
                             android:textSize="40sp" />
 
                         <TextView
@@ -166,9 +167,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/black"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/low_quota_racks"
+                            android:textColor="@color/black"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -178,9 +179,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_marginHorizontal="8dp"
                     android:background="@color/light_gray"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
@@ -249,8 +250,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:fontFamily="@font/roboto_bold"
-                                android:textColor="@color/black"
                                 android:text="0"
+                                android:textColor="@color/black"
                                 android:textSize="40sp" />
 
                             <TextView
@@ -274,9 +275,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
-
 
 
             <LinearLayout
@@ -311,6 +309,7 @@
                 android:layout_height="2dp"
                 android:layout_below="@id/label"
                 android:layout_marginStart="20dp"
+                android:layout_marginVertical="4dp"
                 android:background="@color/grey_50" />
 
             <androidx.recyclerview.widget.RecyclerView

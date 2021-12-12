@@ -24,7 +24,7 @@ class todayOutList : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today_out_list, container,false)
 
-        binding.todayOutList.adapter = todayListAdapter(requireActivity(), records, "in")
+        binding.todayOutList.adapter = todayListAdapter(requireActivity(), records, "out")
 
         // make the list item clickable
         binding.todayOutList.isClickable = true

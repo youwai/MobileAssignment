@@ -24,7 +24,7 @@
             android:id="@+id/rackName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13dp"
             android:layout_marginTop="5dp"
             android:text="@string/rack"
             android:textSize="30sp"
@@ -68,16 +68,15 @@
             android:layout_below="@id/description"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:padding="2dp"
+            android:paddingVertical="2dp"
+            android:paddingHorizontal="20dp"
             android:orientation="horizontal"
             android:background="@drawable/cardview_box">
 
             <ImageView
                 android:id="@+id/StatusIcon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/status"

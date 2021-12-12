@@ -14,15 +14,18 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.toObject
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.example.mobileassignment.databinding.ActivityMainBinding
 
-
-class RackDetails (private val selectedRack: Rack) : Fragment() {
+//private val selectedRack: Rack
+class RackDetails () : Fragment() {
     private lateinit var binding: FragmentRackDetailsBinding
     private val db = Firebase.firestore
 
     private val materialsOnlist: ArrayList<Materials> = ArrayList()
     private val materialsOutlist: ArrayList<Materials> = ArrayList()
+
+    private var selectedRack: Rack? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,14 +36,18 @@ class RackDetails (private val selectedRack: Rack) : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_rack_details, container, false)
 
+        val viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
+        selectedRack = viewModelData.selectedRack
         binding.rack = selectedRack
 
-        val quotaAvailable = (selectedRack.quota.toInt() - selectedRack.usedQuota.toInt())
+        val quotaAvailable = (selectedRack?.quota?.toInt()?.minus(selectedRack!!.usedQuota.toInt()))
         binding.quantityAvailable.text = quotaAvailable.toString()
 
         // if low quota show the indicator
-        if (quotaAvailable <= 10) {
-            binding.indicator.visibility = View.VISIBLE
+        if (quotaAvailable != null) {
+            if (quotaAvailable <= 10) {
+                binding.indicator.visibility = View.VISIBLE
+            }
         }
 
         readData(object : FirestoreCallback {
@@ -84,7 +91,7 @@ class RackDetails (private val selectedRack: Rack) : Fragment() {
     }
 
     private fun readData(firestoreCallback: FirestoreCallback) {
-        db.collection("Rack").document(selectedRack.rackName).collection("Materials")
+        db.collection("Rack").document(selectedRack!!.rackName).collection("Materials")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {

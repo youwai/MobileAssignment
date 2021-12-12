@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewAdapter(private var rackData: MutableList<Rack>) :
+class RecyclerViewAdapter(private var rackData: MutableList<Rack>, private var viewModelData: ViewModelData) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(), Filterable {
 
     var tempRackData: MutableList<Rack> = mutableListOf()
@@ -67,7 +67,9 @@ class RecyclerViewAdapter(private var rackData: MutableList<Rack>) :
 
                 //Navigate to ???
                 val activity = view.context as MainActivity
-                val fragment = RackDetails(rackData[position])
+                val fragment = RackDetails()
+                viewModelData.selectedRack = rackData[position]
+
                 activity.supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)

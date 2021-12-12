@@ -82,7 +82,7 @@ class RackList : Fragment() {
 
     private fun recyclerView() {
         binding.rackListRecycleView.layoutManager = manager
-        racksAdapter  = RecyclerViewAdapter(rackData)
+        racksAdapter  = RecyclerViewAdapter(rackData, viewModelData)
         binding.rackListRecycleView.adapter = racksAdapter
 
 

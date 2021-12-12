@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var scannerIntegrator: IntentIntegrator
-    private lateinit var qrLauncher : ActivityResultLauncher<Intent>
-    private lateinit var permissionLauncher : ActivityResultLauncher<String>
+    private lateinit var qrLauncher: ActivityResultLauncher<Intent>
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var viewModelData: ViewModelData
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //navigation drawer menu configuration
         binding.navView.bringToFront()
         binding.navView.itemIconTintList = null
-        val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -64,7 +70,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val menu = binding.navView.menu
         val text = menu.findItem(R.id.logout)
         val s = SpannableString(text.title)
-        s.setSpan(TextAppearanceSpan(this, R.style.logout_text),0, s.length, 0)
+        s.setSpan(TextAppearanceSpan(this, R.style.logout_text), 0, s.length, 0)
         text.title = s
 
         // onClickListener navigation bar items
@@ -89,12 +95,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             supportFragmentManager.backStackEntryCount > 0 -> {
-    //            supportFragmentManager.popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-    //            supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, Dashboard()).commit()
+                //            supportFragmentManager.popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                //            supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, Dashboard()).commit()
 
-    //            for (i in 0 until supportFragmentManager.backStackEntryCount) {
-    //                supportFragmentManager.popBackStack()
-    //            }
+                //            for (i in 0 until supportFragmentManager.backStackEntryCount) {
+                //                supportFragmentManager.popBackStack()
+                //            }
 
                 supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             }
@@ -105,7 +111,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.nav_dashboard -> {
 
                 //Navigate To Dashboard
@@ -127,11 +133,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //Navigate to Add Materials
                 navigationFunction(AddMaterialFragment())
 
-//                supportActionBar?.setDisplayShowTitleEnabled(true)
-//                supportActionBar?.title = "Add new material"
-//                supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//                supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
                 // Do not delete. This is to close the navigation slider
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
@@ -149,7 +150,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun setupRequiredSetting(){
+    private fun setupRequiredSetting() {
 
         //Set up QR Code Scanner
         setupMyQrScanner()
@@ -162,7 +163,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun setupMyQrScanner(){
+    private fun setupMyQrScanner() {
 
         //IntentIntegrator(this) for activity
 
@@ -180,7 +181,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun setupQrLauncher(){
+    private fun setupQrLauncher() {
 
         qrLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
@@ -216,26 +217,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    private fun setupPermissionLauncher(){
+    private fun setupPermissionLauncher() {
 
         //Get Permission
-        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
 
-            if(it){
-                qrLauncher.launch(scannerIntegrator.createScanIntent())
-                Toast.makeText(this, "Camera Access Granted !!", Toast.LENGTH_LONG).show()
+                if (it) {
+                    qrLauncher.launch(scannerIntegrator.createScanIntent())
+                    Toast.makeText(this, "Camera Access Granted !!", Toast.LENGTH_LONG).show()
 
-            }else{
-                Toast.makeText(this, "Please Accept Camera Permission !", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Please Accept Camera Permission !", Toast.LENGTH_LONG)
+                        .show()
+                }
+
             }
-
-        }
 
     }
 
 
     //This Function is call to navigate to other fragment
-    private fun navigationFunction(fragment : Fragment){
+    private fun navigationFunction(fragment: Fragment) {
 //        if(supportFragmentManager.backStackEntryCount >= 1) {
 //            supportFragmentManager.beginTransaction()
 //                .replace(R.id.fragmentContainer, fragment)

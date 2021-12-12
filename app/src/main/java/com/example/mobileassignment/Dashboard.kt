@@ -55,6 +55,20 @@ class Dashboard : Fragment() {
             }
         }, 10)
 
+        binding.todayInCardView.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, todayInList())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.todayOutCardView.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, todayOutList())
+                .addToBackStack(null)
+                .commit()
+        }
+
         return binding.root
     }
 
@@ -150,7 +164,7 @@ class Dashboard : Fragment() {
 
     private fun recyclerView() {
         binding.materialrecycleView.layoutManager = manager
-        binding.materialrecycleView.adapter = RecyclerViewAdapter(rackData)
+        binding.materialrecycleView.adapter = RecyclerViewAdapter(rackData, viewModelData)
 
     }
 
