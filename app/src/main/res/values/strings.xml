@@ -29,5 +29,10 @@
     <string name="new_material">New Material</string>
     <string name="clear">Clear</string>
     <string name="searchTitle">Search</string>
+    <string name="low_quota_racks">Low Quota Racks</string>
+    <string name="total_racks">Total Racks</string>
+    <string name="today_in">Today In</string>
+    <string name="today_out">Today Out</string>
+    <string name="total_rack">Total Rack</string>
 
 </resources>

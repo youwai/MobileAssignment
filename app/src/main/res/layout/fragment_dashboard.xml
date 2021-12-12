@@ -7,6 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,10 +19,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingStart="20dp"
                 android:paddingBottom="20dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/DashboardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Dashboard"
+                    android:textColor="@color/black"
+                    android:textSize="28sp" />
+
+                <!--LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -39,172 +50,234 @@
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/roboto_bold"
                         android:text="Today"
-                        android:textColor="@color/black"
-                        android:textSize="30sp" />
-                </LinearLayout>
+                        android:textColor="@color/grey_50"
+                        android:textSize="25sp" />
+
+                </LinearLayout-->
 
                 <View
-                    android:layout_width="120dp"
+                    android:layout_width="180dp"
                     android:layout_height="2dp"
-                    android:background="#efefefef" />
+                    android:layout_marginStart="20dp"
+                    android:background="@color/grey_50" />
 
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
                     android:text="Date"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:id="@+id/summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
                         android:src="@drawable/summary" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:text="Summary"
                         android:textColor="@color/black"
-                        android:textSize="30sp"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
                 <View
-                    android:layout_width="170dp"
+                    android:layout_width="180dp"
                     android:layout_height="2dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="4dp"
-                    android:background="@color/light_gray" />
+                    android:background="@color/grey_50" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="8dp"
+                    android:gravity="center_horizontal"
+                    android:background="@color/light_gray"
+                    android:orientation="horizontal">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp">
 
-                        <TextView
-                            android:id="@+id/lowQuotaRack_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Low Quota Racks : "
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/lowQuotaRack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_toEndOf="@id/lowQuotaRack_title"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="0"
-                            android:textSize="25sp" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/totalRack_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Total Racks : "
-                            android:textSize="20sp" />
+                    <LinearLayout
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="15dp">
 
                         <TextView
                             android:id="@+id/totalRack"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_toEndOf="@id/totalRack_title"
+                            android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/black"
                             android:text="0"
-                            android:textSize="25sp" />
-
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp">
+                            android:textSize="40sp" />
 
                         <TextView
-                            android:id="@+id/todayIn_title"
+                            android:id="@+id/totalRack_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Today In :"
-                            android:textSize="20sp" />
+                            android:text="@string/total_rack"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="15dp">
 
                         <TextView
-                            android:id="@+id/todayIn"
+                            android:id="@+id/lowQuotaRack"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_toEndOf="@id/todayIn_title"
+                            android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/roboto_bold"
                             android:text="0"
-                            android:textSize="25sp" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp">
+                            android:textColor="@color/black"
+                            android:textSize="40sp" />
 
                         <TextView
-                            android:id="@+id/todayOut_title"
+                            android:id="@+id/lowQuotaRack_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/black"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Today Out :"
-                            android:textSize="20sp" />
+                            android:text="@string/low_quota_racks"
+                            android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/todayOut"
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@color/light_gray"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/todayInCardView"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="15dp"
+                        android:backgroundTint="#409cf4"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="10dp"
+                        app:contentPadding="5dp">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_toEndOf="@id/todayOut_title"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="0"
-                            android:textSize="25sp" />
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/todayIn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="@font/roboto_bold"
+                                android:text="0"
+                                android:textColor="@color/black"
+                                android:textSize="40sp" />
+
+                            <TextView
+                                android:id="@+id/todayIn_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:text="@string/today_in"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
 
 
-                    </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/todayOutCardView"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="15dp"
+                        android:backgroundTint="#409cf4"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="10dp"
+                        app:contentPadding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/todayOut"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textColor="@color/black"
+                                android:text="0"
+                                android:textSize="40sp" />
+
+                            <TextView
+                                android:id="@+id/todayOut_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:text="@string/today_out"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
 
                 </LinearLayout>
 
             </LinearLayout>
+
+
+
+
 
             <LinearLayout
                 android:id="@+id/label"
@@ -217,10 +290,10 @@
                 tools:ignore="RtlSymmetry,UseCompoundDrawables">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/notice" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_baseline_notification" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -229,16 +302,16 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="Notice"
                     android:textColor="@color/black"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <View
                 android:id="@+id/line2"
-                android:layout_width="140dp"
+                android:layout_width="180dp"
                 android:layout_height="2dp"
                 android:layout_below="@id/label"
                 android:layout_marginStart="20dp"
-                android:background="#efefefef" />
+                android:background="@color/grey_50" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/materialrecycleView"
