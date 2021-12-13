@@ -144,15 +144,12 @@ class AddMaterialFragment : Fragment() {
         for (racks in viewModelData.racks) {
 
             if (rackPath.equals(racks.rackName)) {
-
-                Log.v("Check", rackPath.equals(racks.rackName).toString())
                 rack = racks
 
             }
         }
 
         if (rack.usedQuota.toInt() < 30) {
-            Log.v("Check", rack.usedQuota)
             db.collection("Rack").document(rackPath).collection("Materials")
                 .document(serial.toString())
                 .set(hashMap).addOnSuccessListener {
