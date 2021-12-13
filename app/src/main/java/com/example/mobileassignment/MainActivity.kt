@@ -95,13 +95,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             supportFragmentManager.backStackEntryCount > 0 -> {
-                //            supportFragmentManager.popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                //            supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, Dashboard()).commit()
-
-                //            for (i in 0 until supportFragmentManager.backStackEntryCount) {
-                //                supportFragmentManager.popBackStack()
-                //            }
-
                 supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             }
             else -> {
@@ -110,6 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    // navigation slide bar item on click listener
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_dashboard -> {
@@ -239,18 +233,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     //This Function is call to navigate to other fragment
     private fun navigationFunction(fragment: Fragment) {
-//        if(supportFragmentManager.backStackEntryCount >= 1) {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragmentContainer, fragment)
-//                .commit()
-//        }
-//        else {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragmentContainer, fragment)
-//                .addToBackStack("null")
-//                .commit()
-//        }
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)

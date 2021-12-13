@@ -97,11 +97,6 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
 
         //Button will lead user to main page
         binding.buttonRetrieveSuccess.setOnClickListener {
-//            requireActivity().supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragmentContainer, Dashboard())
-//                .addToBackStack(null)
-//                .commit()
-
             requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
