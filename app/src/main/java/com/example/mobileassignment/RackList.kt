@@ -51,6 +51,7 @@ class RackList : Fragment() {
 
         //Clear the data inside the rackData before read the data from database.
         rackData.clear()
+        viewModelData.resetDbData()
 
         readMaterial(object : FirestoreCallback {
             override fun onCallback() {
@@ -59,6 +60,7 @@ class RackList : Fragment() {
                 rackData.sortWith(compareByDescending { it.rackNo })
                 rackData = rackData.asReversed()
 
+                viewModelData.racks.addAll(rackData)
                 //To Start the Recycle View
                 recyclerView()
             }

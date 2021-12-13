@@ -89,6 +89,8 @@ class Dashboard : Fragment() {
                 rackData.sortWith(compareByDescending { it.rackNo })
                 rackData = rackData.asReversed()
 
+                viewModelData.racks.addAll(rackData)
+
                 //Set Total Racks to View
                 binding.totalRack.text = rackData.size.toString()
 

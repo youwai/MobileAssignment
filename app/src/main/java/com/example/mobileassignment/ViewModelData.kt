@@ -11,6 +11,7 @@ class ViewModelData: ViewModel() {
     var todayInMaterial :MutableList<Materials> = mutableListOf()
     var todayOutMaterial :MutableList<Materials> = mutableListOf()
     var emp: Employee? = null
+    var racks : MutableList<Rack> = mutableListOf()
 
     var selectedRack: Rack? = null
 
@@ -25,6 +26,7 @@ class ViewModelData: ViewModel() {
     }
 
     fun resetDbData(){
+        racks.clear()
         todayInMaterial.clear()
         todayOutMaterial.clear()
     }

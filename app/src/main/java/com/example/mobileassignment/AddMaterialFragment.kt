@@ -29,9 +29,10 @@ class AddMaterialFragment : Fragment() {
 
     private lateinit var binding: FragmentAddMaterialBinding
     private lateinit var scannerIntegrator: IntentIntegrator
-    private lateinit var qrLauncher : ActivityResultLauncher<Intent>
-    private lateinit var permissionLauncher : ActivityResultLauncher<String>
+    private lateinit var qrLauncher: ActivityResultLauncher<Intent>
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var viewModelData: ViewModelData
+    private lateinit var rack: Rack
     private var db = Firebase.firestore
 
     override fun onCreateView(
@@ -55,7 +56,7 @@ class AddMaterialFragment : Fragment() {
         //Set Qr Code Scanner
         setupRequiredSetting()
 
-        binding.qrButton.setOnClickListener{
+        binding.qrButton.setOnClickListener {
             permissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
 
@@ -74,24 +75,24 @@ class AddMaterialFragment : Fragment() {
 
             binding.partInput.doOnTextChanged { _, _, _, _ ->
                 binding.partInputLayout.error = null
-                }
+            }
 
             binding.quantityInput.doOnTextChanged { _, _, _, _ ->
                 binding.quantityInputLayout.error = null
             }
 
             //if input field is empty, show error
-            if(serial?.isEmpty() == true)  {
+            if (serial?.isEmpty() == true) {
                 binding.serialInputLayout.error = " "
             }
-            if (part?.isEmpty() == true)  {
+            if (part?.isEmpty() == true) {
                 binding.partInputLayout.error = " "
             }
-            if(qty?.isEmpty() == true) {
+            if (qty?.isEmpty() == true) {
                 binding.quantityInputLayout.error = " "
             }
             //if no input field are empty, upload data to firebase and clear text field later
-             if(serial?.isEmpty() == false && part?.isEmpty() == false && qty?.isEmpty() == false) {
+            if (serial?.isEmpty() == false && part?.isEmpty() == false && qty?.isEmpty() == false) {
                 uploadData(serial, part, qty, status, rackInDate, emp)
                 binding.serialInput.text?.clear()
                 binding.partInput.text?.clear()
@@ -99,7 +100,7 @@ class AddMaterialFragment : Fragment() {
             }
         }
 
-        binding.cancelButton.setOnClickListener{
+        binding.cancelButton.setOnClickListener {
             binding.serialInput.text?.clear()
             binding.partInput.text?.clear()
             binding.quantityInput.text?.clear()
@@ -108,7 +109,14 @@ class AddMaterialFragment : Fragment() {
         return binding.root
     }
 
-    private fun uploadData(serial: Editable?, part: Editable?, qty: Editable?, status: Editable?, rackInDate: Editable?, emp: Editable?){
+    private fun uploadData(
+        serial: Editable?,
+        part: Editable?,
+        qty: Editable?,
+        status: Editable?,
+        rackInDate: Editable?,
+        emp: Editable?
+    ) {
         val hashMap = hashMapOf<String, Any>(
             "serialNo" to serial.toString(),
             "partNo" to part.toString(),
@@ -119,7 +127,7 @@ class AddMaterialFragment : Fragment() {
             "rackOutBy" to "",
             "rackOutDate" to ""
         )
-        val rackPath = when(part.toString().first()){
+        val rackPath = when (part.toString().first()) {
             'A' -> "Rack1"
             'B' -> "Rack2"
             'C' -> "Rack3"
@@ -133,16 +141,42 @@ class AddMaterialFragment : Fragment() {
             else -> "Rack11"
         }
 
-        db.collection("Rack").document(rackPath).collection("Materials").document(serial.toString())
-            .set(hashMap).addOnSuccessListener {
-                Snackbar.make(requireView(), "Material Added to $rackPath!", Snackbar.LENGTH_LONG).show()
+        for (racks in viewModelData.racks) {
+
+            if (rackPath.equals(racks.rackName)) {
+
+                Log.v("Check", rackPath.equals(racks.rackName).toString())
+                rack = racks
+
             }
-            .addOnFailureListener{
-                Toast.makeText(activity, "Some error had occurred!", Toast.LENGTH_SHORT).show()
-            }
+        }
+
+        if (rack.usedQuota.toInt() < 30) {
+            Log.v("Check", rack.usedQuota)
+            db.collection("Rack").document(rackPath).collection("Materials")
+                .document(serial.toString())
+                .set(hashMap).addOnSuccessListener {
+
+                    Snackbar.make(
+                        requireView(),
+                        "Material Added to $rackPath!",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(activity, "Some error had occurred!", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+
+            Snackbar.make(requireView(), "No Enough Quota In $rackPath!", Snackbar.LENGTH_LONG)
+                .show()
+
+        }
+
     }
 
-    private fun setDataToView(){
+
+    private fun setDataToView() {
         binding.serialInput.setText(viewModelData.serialNo)
         binding.partInput.setText(viewModelData.partNo)
         binding.quantityInput.setText(viewModelData.quantity)
@@ -166,7 +200,7 @@ class AddMaterialFragment : Fragment() {
 
     }
 
-    private fun setupRequiredSetting(){
+    private fun setupRequiredSetting() {
 
         //Set up QR Code Scanner
         setupMyQrScanner()
@@ -179,7 +213,7 @@ class AddMaterialFragment : Fragment() {
 
     }
 
-    private fun setupMyQrScanner(){
+    private fun setupMyQrScanner() {
 
         //IntentIntegrator(this) for activity
 
@@ -197,7 +231,7 @@ class AddMaterialFragment : Fragment() {
 
     }
 
-    private fun setupQrLauncher(){
+    private fun setupQrLauncher() {
 
         qrLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
@@ -223,7 +257,11 @@ class AddMaterialFragment : Fragment() {
                         }
                     }
                 } else {
-                    Toast.makeText(activity, "InCorrect Format!!! Please Try Again", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        activity,
+                        "InCorrect Format!!! Please Try Again",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             }
@@ -232,19 +270,21 @@ class AddMaterialFragment : Fragment() {
         }
     }
 
-    private fun setupPermissionLauncher(){
+    private fun setupPermissionLauncher() {
 
         //Get Permission
-        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
 
-            if(it){
-                qrLauncher.launch(scannerIntegrator.createScanIntent())
-                Toast.makeText(activity, "Camera Access Granted !!", Toast.LENGTH_LONG).show()
+                if (it) {
+                    qrLauncher.launch(scannerIntegrator.createScanIntent())
+                    Toast.makeText(activity, "Camera Access Granted !!", Toast.LENGTH_LONG).show()
 
-            }else{
-                Toast.makeText(activity, "Please Accept Camera Permission !", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(activity, "Please Accept Camera Permission !", Toast.LENGTH_LONG)
+                        .show()
+                }
             }
-        }
     }
 }
 
