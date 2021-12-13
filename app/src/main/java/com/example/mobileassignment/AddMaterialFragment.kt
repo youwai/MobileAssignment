@@ -45,9 +45,11 @@ class AddMaterialFragment : Fragment() {
         //Create ViewModel (Owner : this activity)
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
-        getRetrieveDate()
-        getRetrieveBy()
+        //get Today's Date as Rack In Date and Employee ID
+        getRackInDate()
+        getEmpID()
 
+        //Set Status to 2
         binding.statusInput.setText("2")
 
         //Set Qr Code Scanner
@@ -65,6 +67,7 @@ class AddMaterialFragment : Fragment() {
             val rackInDate = binding.dateInputLayout.editText?.text
             val emp = binding.receivedInputLayout.editText?.text
 
+            //remove error field after changing text in input field
             binding.serialInput.doOnTextChanged { _, _, _, _ ->
                 binding.serialInputLayout.error = null
             }
@@ -77,6 +80,7 @@ class AddMaterialFragment : Fragment() {
                 binding.quantityInputLayout.error = null
             }
 
+            //if input field is empty, show error
             if(serial?.isEmpty() == true)  {
                 binding.serialInputLayout.error = " "
             }
@@ -86,7 +90,8 @@ class AddMaterialFragment : Fragment() {
             if(qty?.isEmpty() == true) {
                 binding.quantityInputLayout.error = " "
             }
-            if(serial?.isEmpty() == false && part?.isEmpty() == false && qty?.isEmpty() == false) {
+            //if no input field are empty, upload data to firebase and clear text field later
+             if(serial?.isEmpty() == false && part?.isEmpty() == false && qty?.isEmpty() == false) {
                 uploadData(serial, part, qty, status, rackInDate, emp)
                 binding.serialInput.text?.clear()
                 binding.partInput.text?.clear()
@@ -123,7 +128,9 @@ class AddMaterialFragment : Fragment() {
             'F' -> "Rack6"
             'G' -> "Rack7"
             'H' -> "Rack8"
-            else -> "Rack9"
+            'I' -> "Rack9"
+            'J' -> "Rack10"
+            else -> "Rack11"
         }
 
         db.collection("Rack").document(rackPath).collection("Materials").document(serial.toString())
@@ -142,7 +149,7 @@ class AddMaterialFragment : Fragment() {
 
     }
 
-    private fun getRetrieveBy() {
+    private fun getEmpID() {
 
         val id = viewModelData.emp?.id.toString()
 
@@ -150,7 +157,7 @@ class AddMaterialFragment : Fragment() {
 
     }
 
-    private fun getRetrieveDate() {
+    private fun getRackInDate() {
 
         val date = SimpleDateFormat("dd/MM/yyyy").format(Date())
 
