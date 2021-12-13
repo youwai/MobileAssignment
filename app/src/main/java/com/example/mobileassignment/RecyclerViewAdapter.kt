@@ -65,7 +65,7 @@ class RecyclerViewAdapter(private var rackData: MutableList<Rack>, private var v
                 //This is To Get the position of the cardView.
                 val position: Int = absoluteAdapterPosition
 
-                //Navigate to ???
+                //Navigate to Rack Detail Fragment
                 val activity = view.context as MainActivity
                 val fragment = RackDetails()
                 viewModelData.selectedRack = rackData[position]
@@ -75,16 +75,17 @@ class RecyclerViewAdapter(private var rackData: MutableList<Rack>, private var v
                     .addToBackStack(null)
                     .commit()
 
-                Toast.makeText(view.context, rackData[position].rackName, Toast.LENGTH_LONG).show()
             }
         }
     }
 
+    //Prepare for Search Function
     override fun getFilter(): Filter {
 
         return listFilter
     }
 
+    //Prepare for Search Function
     private val listFilter = object : Filter() {
 
         override fun performFiltering(constraint: CharSequence?): FilterResults {

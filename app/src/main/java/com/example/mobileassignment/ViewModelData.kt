@@ -14,7 +14,7 @@ class ViewModelData: ViewModel() {
 
     var selectedRack: Rack? = null
 
-    //This is for Qr Data
+    //This is to hold Qr Data after scanning
     fun setValue(contents : JSONObject) {
 
         resetQrData()
@@ -24,15 +24,15 @@ class ViewModelData: ViewModel() {
 
     }
 
-    fun resetQrData(){
-        serialNo = null
-        partNo  = null
-        quantity = null
-    }
-
     fun resetDbData(){
         todayInMaterial.clear()
         todayOutMaterial.clear()
+    }
+
+    private fun resetQrData(){
+        serialNo = null
+        partNo  = null
+        quantity = null
     }
 
 

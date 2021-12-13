@@ -43,7 +43,7 @@ class Dashboard : Fragment() {
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
         manager = LinearLayoutManager(requireContext())
 
-        // set up date in dashbaord
+        //Set up date in Dashboard
         someHandler = Handler(getMainLooper())
         someHandler!!.postDelayed(object : Runnable {
             @SuppressLint("SimpleDateFormat")
@@ -55,6 +55,7 @@ class Dashboard : Fragment() {
             }
         }, 10)
 
+        //Set onclickListener For Today In Card View
         binding.todayInCardView.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, todayInList())
@@ -62,6 +63,7 @@ class Dashboard : Fragment() {
                 .commit()
         }
 
+        //Set onclickListener For Today Out Card View
         binding.todayOutCardView.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, todayOutList())
@@ -72,6 +74,7 @@ class Dashboard : Fragment() {
         return binding.root
     }
 
+    //Reason of put the code inside the resume: To prevent the data stack when resume the fragment
     override fun onResume() {
         super.onResume()
 
@@ -117,23 +120,34 @@ class Dashboard : Fragment() {
             for (document in result) {
                 db.collection("Rack").document(document.data["name"].toString())
                     .collection("Materials").get().addOnSuccessListener {
+                        var usedQuota: Int = 0
+
+                        for (materials in it) {
+                            val material = materials.toObject<Materials>()
+
+                            if (material.status == 2) {
+                                usedQuota += 1
+                            }
+
+                            when (material.status) {
+                                2 -> {
+                                    if (material.rackInDate.equals(todayDate))
+                                        viewModelData.todayInMaterial.add(material)
+                                }
+                                3 -> {
+                                    if (material.rackOutDate.equals(todayDate))
+                                        viewModelData.todayOutMaterial.add(material)
+                                }
+                            }
+                        }
                         rackData.add(
                             Rack(
                                 document.data["name"].toString(),
                                 document.data["quota"].toString(),
                                 document.data["description"].toString(),
-                                it.size().toString()
+                                usedQuota.toString()
                             )
                         )
-                        for (materials in it) {
-                            val material = materials.toObject<Materials>()
-                            if (material.rackInDate.equals(todayDate)) {
-                                when (material.status) {
-                                    2 -> viewModelData.todayInMaterial.add(material)
-                                    3 -> viewModelData.todayOutMaterial.add(material)
-                                }
-                            }
-                        }
                         if (rackData.size.equals(result.size()))
                             firebaseCallback.onCallback()
 
@@ -153,7 +167,7 @@ class Dashboard : Fragment() {
 
         for (rack in rackData) {
 
-            if ((rack.quota.toInt() - rack.usedQuota.toInt()) < 10) {
+            if ((rack.quota.toInt() - rack.usedQuota.toInt()) <= 10) {
 
                 lowQuotaRack.add(rack)
             }
@@ -167,7 +181,6 @@ class Dashboard : Fragment() {
         binding.materialrecycleView.adapter = RecyclerViewAdapter(rackData, viewModelData)
 
     }
-
 
     private interface FirestoreCallback {
         fun onCallback()

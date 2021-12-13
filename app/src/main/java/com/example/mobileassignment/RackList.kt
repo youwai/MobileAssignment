@@ -29,6 +29,7 @@ class RackList : Fragment() {
     private var racksAdapter: RecyclerViewAdapter? = null
     private var rackData: MutableList<Rack> = mutableListOf()
     private val db = Firebase.firestore
+
     @SuppressLint("SimpleDateFormat")
     private val todayDate: String = SimpleDateFormat("dd/MM/yyyy").format(Date()).toString()
 
@@ -41,15 +42,28 @@ class RackList : Fragment() {
         manager = LinearLayoutManager(requireContext())
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
 
-
-
-
-
         return binding.root
     }
 
-    private interface FirestoreCallback {
-        fun onCallback()
+    //Reason of put the code inside the resume: To prevent the data stack when resume the fragment
+    override fun onResume() {
+        super.onResume()
+
+        //Clear the data inside the rackData before read the data from database.
+        rackData.clear()
+
+        readMaterial(object : FirestoreCallback {
+            override fun onCallback() {
+
+                //This function is to sort the data read from the database.
+                rackData.sortWith(compareByDescending { it.rackName })
+                rackData = rackData.asReversed()
+
+                //To Start the Recycle View
+                recyclerView()
+            }
+        })
+
     }
 
     private fun readMaterial(firebaseCallback: FirestoreCallback) {
@@ -58,12 +72,32 @@ class RackList : Fragment() {
             for (document in result) {
                 db.collection("Rack").document(document.data["name"].toString())
                     .collection("Materials").get().addOnSuccessListener {
+                        var usedQuota: Int = 0
+
+                        for (materials in it) {
+                            val material = materials.toObject<Materials>()
+
+                            if (material.status == 2) {
+                                usedQuota += 1
+                            }
+
+                            when (material.status) {
+                                2 -> {
+                                    if (material.rackInDate.equals(todayDate))
+                                        viewModelData.todayInMaterial.add(material)
+                                }
+                                3 -> {
+                                    if (material.rackOutDate.equals(todayDate))
+                                        viewModelData.todayOutMaterial.add(material)
+                                }
+                            }
+                        }
                         rackData.add(
                             Rack(
                                 document.data["name"].toString(),
                                 document.data["quota"].toString(),
                                 document.data["description"].toString(),
-                                it.size().toString()
+                                usedQuota.toString()
                             )
                         )
                         if (rackData.size.equals(result.size()))
@@ -82,10 +116,8 @@ class RackList : Fragment() {
 
     private fun recyclerView() {
         binding.rackListRecycleView.layoutManager = manager
-        racksAdapter  = RecyclerViewAdapter(rackData, viewModelData)
+        racksAdapter = RecyclerViewAdapter(rackData, viewModelData)
         binding.rackListRecycleView.adapter = racksAdapter
-
-
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
@@ -107,25 +139,10 @@ class RackList : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        //Clear the data inside the rackData before read the data from database.
-        rackData.clear()
-
-        readMaterial(object : FirestoreCallback {
-            override fun onCallback() {
-
-                //This function is to sort the data read from the database.
-                rackData.sortWith(compareByDescending{it.rackName})
-                rackData = rackData.asReversed()
-
-                //To Start the Recycle View
-                recyclerView()
-            }
-        })
-
+    private interface FirestoreCallback {
+        fun onCallback()
     }
+
 
 
 }
