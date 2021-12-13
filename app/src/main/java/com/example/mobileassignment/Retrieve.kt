@@ -35,6 +35,7 @@ class Retrieve : Fragment() {
 
         binding.viewmodelData = viewModelData
 
+        //Check the "Rack" with part No. of material
         var rackName = when (viewModelData.partNo?.first()) {
             'A' -> "Rack1"
             'B' -> "Rack2"
@@ -44,7 +45,9 @@ class Retrieve : Fragment() {
             'F' -> "Rack6"
             'G' -> "Rack7"
             'H' -> "Rack8"
-            else -> "Invalid Rack"
+            'I' -> "Rack9"
+            'J' -> "Rack10"
+            else -> "Rack11"
         }
 
         binding.rackInput.setText(rackName)
@@ -79,7 +82,7 @@ class Retrieve : Fragment() {
             }
         })
 
-
+        //Button that lead to main page
         binding.cancelButton.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
@@ -87,6 +90,7 @@ class Retrieve : Fragment() {
         return binding.root
     }
 
+    //Get the status of material with serial No.
     private fun getStatus(rackName: String, firestoreCallback: FirestoreCallback) {
 
         val srIn = viewModelData.serialNo

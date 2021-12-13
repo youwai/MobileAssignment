@@ -25,8 +25,8 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
+        // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_retrieve_success, container, false)
         viewModelData = ViewModelProvider(requireActivity()).get(ViewModelData::class.java)
@@ -40,6 +40,7 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
         return binding.root
     }
 
+    //Get the employee ID that retrieve the material
     private fun getRetrieveBy() {
 
         var id = viewModelData.emp?.id.toString()
@@ -48,6 +49,7 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
 
     }
 
+    //Get the date of retrieval
     private fun getRetrieveDate() {
 
         var date = SimpleDateFormat("dd/MM/yyyy").format(Date())
@@ -57,6 +59,7 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
 
     }
 
+    //Update the data in database
     private fun updateRecord() {
 
         val hashMap = hashMapOf<String, Any>(
@@ -79,7 +82,9 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
             'F' -> "Rack6"
             'G' -> "Rack7"
             'H' -> "Rack8"
-            else -> "Invalid Rack"
+            'I' -> "Rack9"
+            'J' -> "Rack10"
+            else -> "Rack11"
         }
 
         db.collection("Rack").document(rackName).collection("Materials")
@@ -90,6 +95,7 @@ class RetrieveSuccess(private val record: Materials?) : Fragment() {
                 Toast.makeText(activity, "Error !", Toast.LENGTH_SHORT).show()
             }
 
+        //Button will lead user to main page
         binding.buttonRetrieveSuccess.setOnClickListener {
 //            requireActivity().supportFragmentManager.beginTransaction()
 //                .replace(R.id.fragmentContainer, Dashboard())

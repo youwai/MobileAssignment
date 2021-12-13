@@ -3,40 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/add_material.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/calendar.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/cardview_box.xml" value="0.2942708333333333" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/home.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/ic_available.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/ic_baseline_done_outline_24.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/qr_code_scanner.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/rack_details_border.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/search_view.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/summary.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/activity_retrieve.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/cardview.xml" value="0.3359375" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/cardview_box.xml" value="0.278125" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/dialog_box.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_add_material.xml" value="0.328125" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_dashboard.xml" value="0.33" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_rack_list.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_retrieve_success.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_temp.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/header.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MobileAssignment/app/src/main/res/menu/navigation_menu.xml" value="0.22864583333333333" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/divider.xml" value="0.37916666666666665" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/ic_baseline_not_interested_24.xml" value="0.37916666666666665" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/ic_baseline_notification.xml" value="0.37916666666666665" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/ic_launcher_background.xml" value="0.321875" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/ic_warning.xml" value="0.37916666666666665" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/rack_details_border.xml" value="0.37916666666666665" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/drawable/summary.xml" value="0.37333333333333335" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/activity_main.xml" value="0.3671875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/cardview.xml" value="0.24592391304347827" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/dialog_box.xml" value="0.33" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_add_material.xml" value="0.32083333333333336" />
@@ -45,10 +23,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_rack_details.xml" value="0.33" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_rack_list.xml" value="0.32083333333333336" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_temp.xml" value="0.33" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_today_in_list.xml" value="0.1" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/fragment_today_out_list.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/material_list_item.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/layout/today_list_item.xml" value="0.3671875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MobileAssignment/app/src/main/res/menu/navigation_menu.xml" value="0.2574074074074074" />
       </map>
     </option>

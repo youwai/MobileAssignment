@@ -16,10 +16,11 @@ class DialogRetrieveFail: DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
+        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dialog_retrieve_fail, container, false)
 
+        //Close the dialog with button
         binding.retrieveFailButton.setOnClickListener{
             dismiss()
         }
