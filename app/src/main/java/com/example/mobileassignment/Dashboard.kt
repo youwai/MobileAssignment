@@ -86,7 +86,7 @@ class Dashboard : Fragment() {
             override fun onCallback() {
 
                 //This function is to Rearrange the data read from the database and store in to viewModel Data
-                rackData.sortWith(compareByDescending { it.rackName })
+                rackData.sortWith(compareByDescending { it.rackNo })
                 rackData = rackData.asReversed()
 
                 //Set Total Racks to View
@@ -145,7 +145,8 @@ class Dashboard : Fragment() {
                                 document.data["name"].toString(),
                                 document.data["quota"].toString(),
                                 document.data["description"].toString(),
-                                usedQuota.toString()
+                                usedQuota.toString(),
+                                document.data["no"].toString().toInt()
                             )
                         )
                         if (rackData.size.equals(result.size()))

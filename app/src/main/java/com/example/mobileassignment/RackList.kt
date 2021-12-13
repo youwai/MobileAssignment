@@ -56,7 +56,7 @@ class RackList : Fragment() {
             override fun onCallback() {
 
                 //This function is to sort the data read from the database.
-                rackData.sortWith(compareByDescending { it.rackName })
+                rackData.sortWith(compareByDescending { it.rackNo })
                 rackData = rackData.asReversed()
 
                 //To Start the Recycle View
@@ -97,7 +97,8 @@ class RackList : Fragment() {
                                 document.data["name"].toString(),
                                 document.data["quota"].toString(),
                                 document.data["description"].toString(),
-                                usedQuota.toString()
+                                usedQuota.toString(),
+                                document.data["no"].toString().toInt()
                             )
                         )
                         if (rackData.size.equals(result.size()))
